@@ -287,7 +287,8 @@ const DAYS=[
   {n:'Miami Marketta 夜市',d:'世界各地街頭小食加 live music，唔使訂位',w:'gmb',e:1,ic:'market',u:'https://www.miamimarketta.com',m:'Miami Marketta'},
   {n:'Royal Dynasty',d:'Surfers Paradise 高級中菜，開咗三十幾年',w:'dm',e:1,ic:'bowl',m:'Royal Dynasty Surfers Paradise'},
   {n:'Mr Hizola’s',d:'Burleigh Heads 新派粵菜，好熱門',w:'gb',e:1,ic:'bowl',m:'Mr Hizola’s Burleigh Heads'},
-  {n:'Airbnb BBQ',d:'超市買料自己燒',w:'gmb',e:1,ic:'bbq'}]}]},
+  {n:'Airbnb BBQ',d:'超市買料自己燒',w:'gmb',e:1,ic:'bbq'},
+  {n:'螢火蟲夜遊：Natural Bridge',d:'Springbrook 雨林，睇洞穴藍光蟲（中文團多數叫螢火蟲）；6pm 左右出發，10pm 左右返',w:'gb',e:2,ic:'lights',u:'https://www.experienceoz.com.au/en/gold-coast/natural-bridge-glow-worm-night-tour'}]}]},
 {dd:17,wd:'四',tt:'自由活動',ev:[1,2],items:[
  {a:9,b:11.5,id:'s17a',q:'上午？',o:[
   {n:'第二轉落水',d:'琴日揀剩嗰樣，或者再出海',w:'gb',e:2,ic:'snorkel'},
@@ -304,7 +305,8 @@ const DAYS=[
  {a:17.5,b:21,id:'s17n',q:'最後一晚？',o:[
   {n:'Airbnb BBQ（姑姐 plan）',d:'屋企人自己傾偈最舒服',w:'gmdb',e:1,ic:'bbq'},
   {n:'Movie World White Christmas',d:'17號有開，5:30pm 至 8:30pm；燈飾、巡遊，要另外買飛',w:'gmb',e:2,ic:'tree',u:'https://whitechristmas.com.au',m:'Warner Bros. Movie World'},
-  {n:'Miami Marketta 夜市',d:'未去過嘅話',w:'gmb',e:1,ic:'market',u:'https://www.miamimarketta.com'}]}]},
+  {n:'Miami Marketta 夜市',d:'未去過嘅話',w:'gmb',e:1,ic:'market',u:'https://www.miamimarketta.com'},
+  {n:'螢火蟲夜遊：Tamborine 雨林',d:'跟團傍晚接、晚上返；瀑布附近睇藍光蟲，有甜品熱飲，行得比較輕鬆',w:'gmb',e:1,ic:'lights',u:'https://au.trip.com/things-to-do/detail/102689931/'}]}]},
 {dd:18,wd:'五',tt:'動物園、送機',ev:[2],items:[
  {a:9,b:14,id:'s18z',q:'去邊個動物園？',o:[
   {n:'Currumbin Wildlife Sanctuary',d:'9am 至 4pm；樹熊、袋鼠，離黃金海岸機場大約 5 分鐘',w:'gmdb',e:1,ic:'koala',u:'https://currumbinsanctuary.com.au/visit/'},
@@ -382,11 +384,11 @@ const EVS=[
 DAYS.forEach(d=>{d.leg=d.leg||'gc';d.ppl=d.ppl||'gmdb'});
 const LEGS=[{k:'gc',n:'黃金海岸',r:'14–18 全家'},{k:'mel',n:'墨爾本',r:'19–24'},{k:'syd',n:'悉尼',r:'25–27'}];
 const SLOTS=[];DAYS.forEach(d=>d.items.forEach(i=>{if(i.id){i.ppl=d.ppl;SLOTS.push(i)}}));
-const TK={s14d:{1:'B'},s15n:{0:'F'},s16a:{0:'B',1:'B',2:'B',3:'F'},s16p:{2:'T'},s16d:{0:'F',1:'B',2:'B'},s17a:{0:'B'},s17l:{0:'B',1:'B',2:'B'},s17n:{1:'T',2:'F'},s18z:{0:'T',1:'T',2:'T'},s19n:{0:'F'},s20d:{0:'B',1:'B',2:'B'},s22d:{1:'F',2:'B'},s23d:{1:'B'},s24a:{0:'F',1:'F'},s24n:{0:'B'},s25n:{0:'B',1:'F',2:'F'},s26a:{1:'F'},s26p:{0:'T',1:'F'},s27a:{1:'F'}};
+const TK={s14d:{1:'B'},s15n:{0:'F'},s16a:{0:'B',1:'B',2:'B',3:'F'},s16p:{2:'T'},s16d:{0:'F',1:'B',2:'B',4:'T'},s17a:{0:'B'},s17l:{0:'B',1:'B',2:'B'},s17n:{1:'T',2:'F',3:'T'},s18z:{0:'T',1:'T',2:'T'},s19n:{0:'F'},s20d:{0:'B',1:'B',2:'B'},s22d:{1:'F',2:'B'},s23d:{1:'B'},s24a:{0:'F',1:'F'},s24n:{0:'B'},s25n:{0:'B',1:'F',2:'F'},s26a:{1:'F'},s26p:{0:'T',1:'F'},s27a:{1:'F'}};
 SLOTS.forEach(sl=>Object.entries(TK[sl.id]||{}).forEach(([i,v])=>sl.o[i].tk=v));
 DAYS[1].items[2].tk='B';
 const TKL={T:'要買飛',B:'要訂位',F:'免費／唔使訂'};
-const TIPS=[['墨爾本住市中心','Airbnb 喺 Rose Lane（CBD），市中心大部分地方屬免費電車區，行街好方便。'],['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
+const TIPS=[['姑姐嘅螢火蟲','黃金海岸夜遊團睇嘅主要係藍光蟲，12月至3月最好睇，夏天亦有機會見到真螢火蟲；記得著行山鞋、帶薄外套。'],['墨爾本住市中心','Airbnb 喺 Rose Lane（CBD），市中心大部分地方屬免費電車區，行街好方便。'],['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
 const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['xmas','White Christmas 門票','如果揀咗'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗']];
 const PACK=[['sun','防曬 SPF50+'],['hat','帽、太陽眼鏡'],['swim','泳衣、拖鞋、毛巾'],['lic','駕駛執照（揸車、租船身份證明）'],['sea','暈浪丸'],['suit','畢業禮靚衫'],['jac','薄外套（冷氣同墨爾本會凍）'],['plug','澳洲插頭轉換器']];
 const PRE=['16號落雨點算？','媽咪攰，想搵啲 chill 嘢做','爸爸想食好嘢中菜','有咩全家都啱玩？','墨爾本同悉尼應該點分日子？'];
