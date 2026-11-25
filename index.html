@@ -164,6 +164,23 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
 .tr .when{font-size:13px;color:var(--mute)}.tr b{font-size:16px;margin-right:6px}
 .tr.on b{text-decoration:line-through;color:var(--mute)}
 .ck.tb{width:44px;border:0;padding:0;justify-content:center;align-items:center}
+.blk{cursor:grab;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.blk.drg{cursor:grabbing;z-index:8;box-shadow:0 8px 24px rgb(0 0 0/.25)!important;opacity:.95;transform:none!important}
+.rz{position:absolute;left:0;right:0;bottom:0;height:9px;cursor:ns-resize}
+.rz::after{content:"";position:absolute;left:50%;bottom:3px;width:22px;height:3px;margin-left:-11px;border-radius:2px;background:currentColor;opacity:.35}
+.legs{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;border-bottom:1px solid var(--line)}
+.legs button{flex:none;border:0;background:var(--hl);border-radius:12px;padding:6px 14px;font-weight:700;cursor:pointer;min-height:44px;text-align:left;line-height:1.25}
+.legs small{display:block;font-weight:500;font-size:12px;color:var(--mute)}
+.legs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}.legs button[aria-pressed=true] small{color:var(--bg)}
+.mm .t.mel{background:color-mix(in srgb,var(--k-ind) 18%,transparent);color:var(--k-ind)}.mm .t.mel.cur{background:var(--k-ind);color:#fff}
+.mm .t.syd{background:color-mix(in srgb,var(--k-red) 18%,transparent);color:var(--k-red)}.mm .t.syd.cur{background:var(--k-red);color:#fff}
+.te{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.ter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ter select,.ter input{font:inherit;font-size:16px;min-height:44px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.col{cursor:cell}
+.selb{position:absolute;left:3px;right:3px;border-radius:8px;background:color-mix(in srgb,var(--k-sea) 22%,transparent);border:2px solid var(--k-sea);color:var(--k-sea);font-size:12px;font-weight:700;padding:3px 7px;pointer-events:none;z-index:6}
+.fm{display:flex;flex-direction:column;gap:14px}.fm label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px}
+.fm input[type=text]{flex:none;width:100%;font:inherit;font-size:16px;min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:400}
 .hide{display:none!important}
 @media(max-width:600px){.tr{grid-template-columns:44px minmax(0,1fr)}.tr .acts{grid-column:2}}
 @media(max-width:900px){.top{position:static}.main{order:-1}.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.strip{display:flex}.ch{top:auto;position:static}.lday{top:0}}
@@ -180,11 +197,11 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
   <div class="sp"></div>
   <button class="meb" id="meb" type="button"><span class="av" id="mea" style="background:var(--k-gray)">?</span><span id="men">揀你係邊個</span></button>
 </div>
-<form class="qa" id="qa"><input id="qi" type="text" maxlength="80" placeholder="快速新增：17號 3點 去 Pacific Fair" aria-label="快速新增活動"><span class="pv" id="pv"></span><button class="btn" type="submit">＋</button></form>
+<form class="qa" id="qa"><input id="qi" type="text" maxlength="80" placeholder="撳日曆空位新增，或者打字：17號 3點 去 Pacific Fair" aria-label="快速新增活動"><span class="pv" id="pv"></span><button class="btn" type="submit" aria-label="新增活動">＋ 新增</button></form>
 <div id="ro"></div>
 <div class="app">
   <aside>
-    <div><div class="mmt">2026年12月</div><div class="mm" id="mm"></div><p class="side-note" style="margin:8px 0 0">藍色係 O家喺黃金海岸嘅日子。18號之後媽咪同姑姐去墨爾本、悉尼（未確認）。</p></div>
+    <div><div class="mmt">2026年12月</div><div class="mm" id="mm"></div><p class="side-note" style="margin:8px 0 0">藍色：黃金海岸（全家）；紫色：墨爾本；紅色：悉尼（媽咪同姑姐）。拖方塊可以改時間。</p></div>
     <div><h3>邊個開心（撳嚟篩選）</h3><div class="pf" id="pf"></div><p class="side-note" id="tired"></p></div>
     <div><h3>要買飛／訂位</h3><p class="side-note" id="tixs" style="margin:0 0 8px"></p><button class="btn g" type="button" data-view="tix">睇晒要訂嘅嘢</button></div>
     <div><h3>期間活動</h3><p class="side-note">灰色細條係當日嘅特別活動。更多睇 <a href="https://experiencegoldcoast.com/events/all" target="_blank" rel="noopener">Experience Gold Coast ↗</a></p></div>
@@ -226,7 +243,7 @@ const CFG=window.TRIP_CONFIG||{};const DB=!!(CFG.url&&CFG.key&&!/YOUR/.test(CFG.
 const HDR={apikey:CFG.key,Authorization:'Bearer '+CFG.key};
 const PHOTO=p=>CFG.url.replace(/\/$/,'')+'/storage/v1/object/public/photos/'+p.split('/').map(encodeURIComponent).join('/');
 let S;try{S=JSON.parse(document.getElementById('state').textContent)}catch(e){S={}}
-const norm=x=>{x=x&&typeof x==='object'?x:{};x.votes=x.votes||{};x.done=x.done||{};x.notes=x.notes||[];x.photos=x.photos||[];x.custom=x.custom||[];return x};
+const norm=x=>{x=x&&typeof x==='object'?x:{};x.votes=x.votes||{};x.done=x.done||{};x.notes=x.notes||[];x.photos=x.photos||[];x.custom=x.custom||[];x.times=x.times&&typeof x.times==='object'?x.times:{};return x};
 if(!DB){try{const l=JSON.parse(localStorage.getItem('o-state')||'null');if(l)S=l}catch(e){}}
 S=norm(S);
 const P={g:{n:'姑姐',c:'var(--pg)',t:'落水派'},m:{n:'媽咪',c:'var(--pm)',t:'行街 chill 派'},d:{n:'爸爸',c:'var(--pd)',t:'賭場食家派'},b:{n:'哥哥',c:'var(--pb)',t:'乜都 OK 派'},l:{n:'Leo',c:'var(--pl)',t:'主人家'}};
@@ -293,19 +310,84 @@ const DAYS=[
   {n:'Currumbin Wildlife Sanctuary',d:'9am 至 4pm；樹熊、袋鼠，離黃金海岸機場大約 5 分鐘',w:'gmdb',e:1,ic:'koala',u:'https://currumbinsanctuary.com.au/visit/'},
   {n:'Lone Pine 樹熊保護區',d:'喺 Brisbane，如果喺 Brisbane 機場上機就順路',w:'mdb',e:1,ic:'koala',m:'Lone Pine Koala Sanctuary'},
   {n:'Sea World',d:'海洋主題樂園，要行多啲',w:'gb',e:2,ic:'snorkel',u:'https://themeparks.com.au',m:'Sea World Gold Coast'}]},
- {a:18,b:20,f:'送爸爸同哥哥去機場',x:'確認邊個機場、幾點航班；媽咪同姑姐之後住邊度',ic:'plane'}]}
+ {a:18,b:20,f:'送爸爸同哥哥去機場',x:'確認邊個機場、幾點航班；媽咪同姑姐之後住邊度',ic:'plane'}]},
+{dd:19,wd:'六',tt:'飛墨爾本',leg:'mel',ppl:'gm',ev:[3],items:[
+ {a:9,b:12,f:'飛墨爾本',x:'航班未定；Leo 送機兼還車',ic:'plane'},
+ {a:13,b:15,f:'墨爾本 Airbnb check-in，休息',x:'Airbnb 未確認',ic:'rest'},
+ {a:17.5,b:20.5,id:'s19n',q:'墨爾本第一晚？',o:[
+  {n:'Myer 聖誕櫥窗，Bourke St 行街',d:'今年主題係 Toy Story，免費睇',w:'gm',e:1,ic:'tree',u:'https://www.myer.com.au/content/christmas-windows',m:'Myer Melbourne Bourke Street'},
+  {n:'唐人街晚飯',d:'Little Bourke Street，粵菜、點心都有',w:'gm',e:1,ic:'bowl',m:'Melbourne Chinatown Little Bourke Street'},
+  {n:'Southbank 河邊散步晚餐',d:'Yarra 河邊，夜景靚',w:'gm',e:1,ic:'city',m:'Southbank Promenade Melbourne'}]}]},
+{dd:20,wd:'日',tt:'一日遊',leg:'mel',ppl:'gm',ev:[3],items:[
+ {a:9,b:21,id:'s20d',q:'第一個一日遊去邊？',o:[
+  {n:'Phillip Island 企鵝歸巢',d:'跟團；日落睇細企鵝上岸，途中可以見袋鼠、樹熊，夜晚先返',w:'gm',e:1,ic:'koala',u:'https://www.klook.com/en-GB/activity/22808-penguin-parade-phillip-island-tour-melbourne/'},
+  {n:'Peninsula Hot Springs 溫泉',d:'離墨爾本大約 90 分鐘，有接駁團，最 chill；有心臟或者血壓問題唔建議',w:'gm',e:0,ic:'rest',u:'https://www.peninsulahotsprings.com/visitor-experiences/first-timers'},
+  {n:'大洋路十二門徒石一日團',d:'海岸公路風景，坐車時間長',w:'g',e:2,ic:'beach',m:'Twelve Apostles Victoria'}]}]},
+{dd:21,wd:'一',tt:'市區',leg:'mel',ppl:'gm',ev:[3],items:[
+ {a:10,b:16,id:'s21a',q:'今日做咩？',o:[
+  {n:'市中心行街',d:'Emporium、QV、Bourke Street Mall；Queen Victoria Market 星期一休息',w:'m',e:1,ic:'bag',m:'Emporium Melbourne'},
+  {n:'Brighton 彩色沙灘小屋、St Kilda 海灘',d:'影相一流，St Kilda 有海邊 cafe',w:'g',e:1,ic:'beach',m:'Brighton Bathing Boxes'},
+  {n:'休息日',d:'Airbnb 附近行下，瞓晏覺',w:'m',e:0,ic:'rest'}]},
+ {a:18,b:20,f:'晚飯（自由）',x:'可以喺頂頭快速新增',ic:'bowl'}]},
+{dd:22,wd:'二',tt:'一日遊',leg:'mel',ppl:'gm',ev:[3],items:[
+ {a:9,b:20,id:'s22d',q:'第二個一日遊？',o:[
+  {n:'20號揀剩嘅一日遊',d:'企鵝、溫泉或者大洋路',w:'gm',e:1,ic:'koala'},
+  {n:'Queen Victoria Market、DFO South Wharf',d:'市場星期二開，6am 至 3pm；下晝去 outlet',w:'gm',e:1,ic:'market',m:'Queen Victoria Market'},
+  {n:'Yarra Valley 酒莊同朱古力廠',d:'跟團最方便，有得試食',w:'gm',e:1,ic:'cafe',m:'Yarra Valley Chocolaterie'}]}]},
+{dd:23,wd:'三',tt:'輕鬆日',leg:'mel',ppl:'gm',ev:[3],items:[
+ {a:10,b:17,id:'s23d',q:'今日？',o:[
+  {n:'Chadstone 購物中心',d:'墨爾本最大型商場',w:'m',e:1,ic:'bag',m:'Chadstone Shopping Centre'},
+  {n:'Puffing Billy 蒸氣火車',d:'坐古董火車穿過森林，輕鬆；要預訂',w:'gm',e:1,ic:'city',m:'Puffing Billy Belgrave'},
+  {n:'休息日',d:'聖誕前抖返夠',w:'m',e:0,ic:'rest'}]}]},
+{dd:24,wd:'四',tt:'平安夜',leg:'mel',ppl:'gm',ev:[3],items:[
+ {a:9,b:13,id:'s24a',q:'平安夜上午？',o:[
+  {n:'Queen Victoria Market 最後採購',d:'星期四開，6am 至 3pm；買手信、食早餐',w:'gm',e:1,ic:'market',m:'Queen Victoria Market'},
+  {n:'皇家植物園散步',d:'免費，chill',w:'gm',e:0,ic:'tree',m:'Royal Botanic Gardens Melbourne'}]},
+ {a:14,b:17,f:'執行李，早啲返 Airbnb',x:'平安夜好多商店大約 6pm 關門',ic:'rest'},
+ {a:18,b:21,id:'s24n',q:'平安夜晚餐？',o:[
+  {n:'訂餐廳食平安夜大餐',d:'一定要預早訂位',w:'gm',e:1,ic:'bowl'},
+  {n:'Airbnb 自己煮',d:'買定材料，輕鬆過節',w:'gm',e:0,ic:'bbq'},
+  {n:'食完去睇聖誕燈飾',d:'市中心、Myer 櫥窗',w:'gm',e:1,ic:'lights',m:'Bourke Street Mall Melbourne'}]}]},
+{dd:25,wd:'五',tt:'聖誕・飛悉尼',leg:'syd',ppl:'gm',ev:[],items:[
+ {a:10,b:13,f:'飛悉尼',x:'航班未定；聖誕節大部分商店休息，機票要早訂',ic:'plane'},
+ {a:14,b:16,f:'悉尼 Airbnb check-in',x:'Airbnb 未確認',ic:'rest'},
+ {a:17,b:21,id:'s25n',q:'聖誕夜？',o:[
+  {n:'預訂聖誕晚餐',d:'聖誕節好多餐廳要預訂',w:'gm',e:1,ic:'bowl'},
+  {n:'Circular Quay 夜景',d:'歌劇院同海港大橋，免費',w:'gm',e:1,ic:'city',m:'Circular Quay Sydney'},
+  {n:'Bondi 海灘散步',d:'悉尼人聖誕好鍾意去海灘',w:'g',e:1,ic:'beach',m:'Bondi Beach'}]}]},
+{dd:26,wd:'六',tt:'Boxing Day',leg:'syd',ppl:'gm',ev:[4],items:[
+ {a:8,b:12,id:'s26a',q:'Boxing Day 上午？',o:[
+  {n:'Boxing Day 大減價',d:'Pitt Street Mall、Westfield Sydney、QVB 全日開，人好多',w:'m',e:1,ic:'bag',m:'Pitt Street Mall Sydney'},
+  {n:'Bondi 至 Coogee 海岸步行',d:'海岸路風景一流',w:'g',e:2,ic:'beach',m:'Bondi to Coogee Walk'},
+  {n:'瞓晏覺',d:'休息一陣先',w:'m',e:0,ic:'rest'}]},
+ {a:12,b:15,id:'s26p',q:'1pm 帆船賽起航，點睇？',o:[
+  {n:'坐船睇起航',d:'海港遊船，最近距離；要預早買飛',w:'gm',e:1,ic:'boat',u:'https://www.captaincook.com.au/whats-on/boxing-day'},
+  {n:'岸上睇（Nielsen Park）',d:'起點就喺附近，免費但人多，要早去',w:'g',e:2,ic:'beach',m:'Nielsen Park Vaucluse'},
+  {n:'唔睇，繼續行街',d:'減價繼續',w:'m',e:1,ic:'bag'}]},
+ {a:18,b:20,f:'晚飯（自由）',x:'Boxing Day 部分餐廳要預訂',ic:'bowl'}]},
+{dd:27,wd:'日',tt:'返香港',leg:'syd',ppl:'gm',ev:[],items:[
+ {a:9,b:12,id:'s27a',q:'最後半日？',o:[
+  {n:'坐渡輪去 Manly',d:'由 Circular Quay 出發，順便睇海港',w:'gm',e:1,ic:'boat',m:'Manly Wharf'},
+  {n:'歌劇院、皇家植物園散步',d:'免費，輕鬆',w:'gm',e:0,ic:'city',m:'Sydney Opera House'},
+  {n:'執行李，休息',d:'慢慢嚟',w:'m',e:0,ic:'rest'}]},
+ {a:15,b:18,f:'飛返香港',x:'航班未定',ic:'plane'}]}
+
 ];
 const EVS=[
  {n:'City Hall 聖誕燈光',w:'12月4至24號，每晚 7:30pm 起',d:'Brisbane King George Square，免費，唔使訂；中華街食完過去就到',ic:'lights',u:'https://www.brisbane.qld.gov.au/events/city-hall-lights/213006336'},
  {n:'Miami Marketta 夜市',w:'逢星期三至六，5pm 起',d:'室內有蓋，落雨都得',ic:'market',u:'https://www.miamimarketta.com'},
- {n:'White Christmas',w:'17、18號都有，5:30pm 至 8:30pm',d:'Movie World 聖誕燈飾、人工雪同巡遊，要另外買飛',ic:'tree',u:'https://whitechristmas.com.au'}];
-const SLOTS=[];DAYS.forEach(d=>d.items.forEach(i=>{if(i.id)SLOTS.push(i)}));
-const TK={s14d:{1:'B'},s15n:{0:'F'},s16a:{0:'B',1:'B',2:'B',3:'F'},s16p:{2:'T'},s16d:{0:'F',1:'B',2:'B'},s17a:{0:'B'},s17l:{0:'B',1:'B',2:'B'},s17n:{1:'T',2:'F'},s18z:{0:'T',1:'T',2:'T'}};
+ {n:'White Christmas',w:'17、18號都有，5:30pm 至 8:30pm',d:'Movie World 聖誕燈飾、人工雪同巡遊，要另外買飛',ic:'tree',u:'https://whitechristmas.com.au'},
+ {n:'Myer 聖誕櫥窗',w:'即日至 2027年1月5號',d:'墨爾本 Bourke St Myer，今年主題係 Toy Story，免費',ic:'tree',u:'https://www.myer.com.au/content/christmas-windows'},
+ {n:'悉尼至荷伯特帆船賽',w:'26號 1pm 起航',d:'起點喺 Nielsen Park 附近；可以岸上或者坐船睇',ic:'boat',u:'https://www.nsw.gov.au/driving-boating-and-transport/boating-and-marine/using-waterways-boating-and-transport-information/boating-on-sydney-harbour/sydney-harbour-major-events/rolex-sydney-to-hobart-yacht-race'}];
+DAYS.forEach(d=>{d.leg=d.leg||'gc';d.ppl=d.ppl||'gmdb'});
+const LEGS=[{k:'gc',n:'黃金海岸',r:'14–18 全家'},{k:'mel',n:'墨爾本',r:'19–24'},{k:'syd',n:'悉尼',r:'25–27'}];
+const SLOTS=[];DAYS.forEach(d=>d.items.forEach(i=>{if(i.id){i.ppl=d.ppl;SLOTS.push(i)}}));
+const TK={s14d:{1:'B'},s15n:{0:'F'},s16a:{0:'B',1:'B',2:'B',3:'F'},s16p:{2:'T'},s16d:{0:'F',1:'B',2:'B'},s17a:{0:'B'},s17l:{0:'B',1:'B',2:'B'},s17n:{1:'T',2:'F'},s18z:{0:'T',1:'T',2:'T'},s19n:{0:'F'},s20d:{0:'B',1:'B',2:'B'},s22d:{1:'F',2:'B'},s23d:{1:'B'},s24a:{0:'F',1:'F'},s24n:{0:'B'},s25n:{0:'B',1:'F',2:'F'},s26a:{1:'F'},s26p:{0:'T',1:'F'},s27a:{1:'F'}};
 SLOTS.forEach(sl=>Object.entries(TK[sl.id]||{}).forEach(([i,v])=>sl.o[i].tk=v));
 DAYS[1].items[2].tk='B';
 const TKL={T:'要買飛',B:'要訂位',F:'免費／唔使訂'};
-const TIPS=[['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
-const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['xmas','White Christmas 門票','如果揀咗'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','媽咪姑姐：墨爾本 Airbnb','未確認'],['syd','媽咪姑姐：悉尼 Airbnb','未確認'],['dom','墨爾本、悉尼內陸機票','']];
+const TIPS=[['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
+const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['xmas','White Christmas 門票','如果揀咗'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','未確認'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗']];
 const PACK=[['sun','防曬 SPF50+'],['hat','帽、太陽眼鏡'],['swim','泳衣、拖鞋、毛巾'],['lic','駕駛執照（揸車、租船身份證明）'],['sea','暈浪丸'],['suit','畢業禮靚衫'],['jac','薄外套（冷氣同墨爾本會凍）'],['plug','澳洲插頭轉換器']];
 const PRE=['16號落雨點算？','媽咪攰，想搵啲 chill 嘢做','爸爸想食好嘢中菜','有咩全家都啱玩？','墨爾本同悉尼應該點分日子？'];
 const $=id=>document.getElementById(id);
@@ -316,14 +398,16 @@ let me=null,view=null,cur=0,filt=[];
 try{me=localStorage.getItem('o-me');view=localStorage.getItem('o-view');filt=JSON.parse(localStorage.getItem('o-filt')||'[]')}catch(e){}
 if(!P[me])me=null;if(!['week','day','list','tix'].includes(view))view=innerWidth<760?'day':'week';if(!Array.isArray(filt))filt=[];
 const today=()=>{const n=new Date(Date.now()+10*36e5);return{y:n.getUTCFullYear(),mo:n.getUTCMonth(),d:n.getUTCDate(),h:n.getUTCHours()+n.getUTCMinutes()/60}};
-{const t=today();if(t.y===2026&&t.mo===11&&t.d>=14&&t.d<=18)cur=t.d-14}
-let ro=false,ver=-1,busyC=false,openKey=null;
+{const t=today();if(t.y===2026&&t.mo===11&&t.d>=14&&t.d<=27)cur=t.d-14}
+let ro=false,ver=-1,busyC=false,openKey=null,leg=DAYS[cur].leg;
 const flash=t=>{const s=$('st');s.textContent=t;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(()=>s.classList.remove('show'),2400)};
 const leader=sl=>{const v=S.votes[sl.id]||{};let best=-1,bc=0;sl.o.forEach((o,i)=>{const c=(v[i]||[]).length;if(c>bc){bc=c;best=i}});return best<0?null:sl.o[best]};
-function evOf(di){
- const d=DAYS[di],out=d.items.map((it,k)=>{const L=it.id?leader(it):null;
-  return{key:di+'-'+k,a:it.a,b:it.b,slot:it.id?it:null,L,ttl:it.id?(L?L.n:it.q):it.f,sub:it.id?(L?'投票領先':'未決定，撳嚟投票'):(it.x||''),ic:it.id?(L?L.ic:''):it.ic,w:it.id?(L?L.w:'gmdb'):'gmdb',vot:it.id?Object.values(S.votes[it.id]||{}).flat():[],fx:it.id?null:it}});
- S.custom.filter(c=>c.d===d.dd).forEach(c=>out.push({key:'c'+c.id,a:c.a,b:c.b,cus:c,ttl:c.t,sub:(P[c.w]?P[c.w].n:'')+' 加',ic:'',w:'gmdb',cc:P[c.w]?P[c.w].c:'var(--k-gray)',vot:[]}));
+function allEv(){const out=[];
+ DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{const key=di+'-'+k,ov=S.times[key],L=it.id?leader(it):null,nd=ov&&ov.d>=14&&ov.d<=27?ov.d-14:di;
+  out.push({key,di:nd,moved:!!ov,a:ov?ov.a:it.a,b:ov?ov.b:it.b,slot:it.id?it:null,L,ttl:it.id?(L?L.n:it.q):it.f,sub:it.id?(L?'投票領先':'未決定，撳嚟投票'):(it.x||''),ic:it.id?(L?L.ic:''):it.ic,w:it.id?(L?L.w:d.ppl):d.ppl,vot:it.id?Object.values(S.votes[it.id]||{}).flat():[],fx:it.id?null:it})}));
+ S.custom.forEach(c=>out.push({key:'c'+c.id,di:c.d-14,a:c.a,b:c.b,cus:c,ttl:c.t,sub:(P[c.w]?P[c.w].n:'')+' 加',ic:'',w:(DAYS[c.d-14]||{}).ppl||'gmdb',cc:P[c.w]?P[c.w].c:'var(--k-gray)',vot:[]}));
+ return out}
+function evOf(di){const out=allEv().filter(e=>e.di===di);
  out.sort((x,y)=>x.a-y.a);const lanes=[];
  out.forEach(e=>{let l=0;while(lanes[l]&&lanes[l]>e.a)l++;lanes[l]=e.b;e.l=l});
  out.forEach(e=>{e.n=1+Math.max(...out.filter(o=>o.a<e.b&&o.b>e.a).map(o=>o.l))});
@@ -334,7 +418,7 @@ const H0=7,H1=24;
 const tkInfo=e=>{if(e.slot&&e.L&&e.L.tk&&e.L.tk!=='F')return{tk:e.L.tk,k:'tk:'+e.slot.id+':'+e.slot.o.indexOf(e.L)};if(e.fx&&e.fx.tk)return{tk:e.fx.tk,k:'tk:f'+e.key};return null};
 function blk(e){const c=ecol(e),und=e.slot&&!e.L,ti=tkInfo(e),tb=ti?`<span class="tkb${S.done[ti.k]?' ok':''}">${S.done[ti.k]?'已訂':ti.tk==='T'?'買飛':'訂位'}</span>`:'';
  const top=`calc(${e.a-H0} * var(--H))`,ht=`calc(${e.b-e.a} * var(--H) - 2px)`,w=100/e.n;
- return `<button class="blk${und?' und':''}${dim(e)?' dim':''}" data-ev="${e.key}" style="top:${top};height:${ht};padding-right:${ti?46:7}px;left:calc(${e.l*w}% + 3px);right:auto;width:calc(${w}% - 6px);background:color-mix(in srgb,${c} 16%,var(--bg));color:color-mix(in srgb,${c} 75%,var(--ink));box-shadow:inset 3px 0 0 ${c}">${tb}<span class="tm">${rng(e.a,e.b)}</span><b>${esc(e.ttl)}</b>${e.b-e.a>=1.4?`<span style="opacity:.8">${esc(e.sub)}</span>`:''}${e.vot.length?`<span class="vd">${e.vot.filter(k=>P[k]).map(k=>`<i style="background:${P[k].c}"></i>`).join('')}</span>`:''}</button>`}
+ return `<button class="blk${und?' und':''}${dim(e)?' dim':''}" data-ev="${e.key}" style="top:${top};height:${ht};padding-right:${ti?46:7}px;left:calc(${e.l*w}% + 3px);right:auto;width:calc(${w}% - 6px);background:color-mix(in srgb,${c} 16%,var(--bg));color:color-mix(in srgb,${c} 75%,var(--ink));box-shadow:inset 3px 0 0 ${c}">${tb}<span class="tm">${rng(e.a,e.b)}</span><b>${esc(e.ttl)}</b>${e.b-e.a>=1.4?`<span style="opacity:.8">${esc(e.sub)}</span>`:''}${e.vot.length?`<span class="vd">${e.vot.filter(k=>P[k]).map(k=>`<i style="background:${P[k].c}"></i>`).join('')}</span>`:''}<span class="rz" aria-hidden="true"></span></button>`}
 function grid(idx){
  const t=today(),n=idx.length;
  let h=`<div class="cal" style="--n:${n}"><div class="ch"><div></div>${idx.map(i=>{const d=DAYS[i],isT=t.y===2026&&t.mo===11&&t.d===d.dd;return `<div class="${isT?'today':''}"><small>星期${d.wd}</small><b>${d.dd}</b><span class="tag">${d.tt}</span></div>`}).join('')}</div>`;
@@ -345,10 +429,10 @@ function grid(idx){
 function list(){return DAYS.map((d,i)=>`<div class="lday">12月${d.dd}日 星期${d.wd}<small>${d.tt}</small></div>${d.ev.map(k=>`<button class="li" data-xe="${k}"><span class="t">全日</span><span class="bar" style="background:${col(EVS[k].ic)}"></span><span><b>${EVS[k].n}</b><small>${EVS[k].w}</small></span></button>`).join('')}${evOf(i).map(e=>`<button class="li${dim(e)?' dim':''}" data-ev="${e.key}"><span class="t">${rng(e.a,e.b)}</span><span class="bar" style="background:${ecol(e)}"></span><span><b>${esc(e.ttl)}</b><small>${esc(e.sub)}</small></span></button>`).join('')}`).join('')}
 function tix(){
  const need=[],other=[],free=[];
- DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{
-  if(!it.id){if(it.tk)need.push({d,a:it.a,n:it.f,tk:it.tk,k:'tk:f'+di+'-'+k,o:it});return}
+ DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{const ov=S.times[di+'-'+k],ed=ov&&DAYS[ov.d-14]?DAYS[ov.d-14]:d,ea=ov?ov.a:it.a;
+  if(!it.id){if(it.tk)need.push({d:ed,a:ea,n:it.f,tk:it.tk,k:'tk:f'+di+'-'+k,o:it});return}
   const L=leader(it);
-  it.o.forEach((o,i)=>{if(!o.tk)return;const r={d,a:it.a,n:o.n,tk:o.tk,k:'tk:'+it.id+':'+i,o,lead:L===o};
+  it.o.forEach((o,i)=>{if(!o.tk)return;const r={d:ed,a:ea,n:o.n,tk:o.tk,k:'tk:'+it.id+':'+i,o,lead:L===o};
    if(o.tk==='F')free.push(r);else if(L===o)need.push(r);else other.push(r)})}));
  const done=need.filter(r=>S.done[r.k]).length,und=SLOTS.filter(sl=>!leader(sl)).length;
  const row=r=>{const on=!!S.done[r.k];return `<div class="tr${on?' on':''}">${r.tk==='F'?'<span></span>':`<button class="ck tb${on?' on':''}" data-ck="${r.k}" aria-label="已訂 ${esc(r.n)}"><span class="bx"></span></button>`}<div><span class="when">12月${r.d.dd}日（${r.d.wd}）${hm(r.a)}</span><br><b>${esc(r.n)}</b><span class="tg ${r.tk}">${TKL[r.tk]}</span>${on&&P[S.done[r.k]]?` <small class="when">${P[S.done[r.k]].n} 訂咗</small>`:''}</div><div class="acts">${links(r.o)}</div></div>`};
@@ -360,31 +444,39 @@ function rView(){
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.view===view));
  $('strip').innerHTML=DAYS.map((d,i)=>`<button data-cur="${i}" aria-pressed="${view!=='list'&&(view==='day'?i===cur:false)}"><b>${d.dd}</b><small>${d.wd}</small></button>`).join('');
  $('strip').classList.toggle('hide',view!=='day');
- $('view').innerHTML=view==='tix'?tix():view==='list'?`<div class="list">${list()}</div>`:grid(view==='week'?[0,1,2,3,4]:[cur]);
+ $('view').innerHTML=view==='tix'?tix():view==='list'?`<div class="list">${list()}</div>`:(view==='week'?`<div class="legs">${LEGS.map(l=>`<button data-leg="${l.k}" aria-pressed="${leg===l.k}">${l.n}<small>${l.r}</small></button>`).join('')}</div>`:'')+grid(view==='week'?DAYS.map((d,i)=>d.leg===leg?i:-1).filter(i=>i>=0):[cur]);
  if(view!=='list'){const sc=document.querySelector('.gridw');if(sc&&!rView.did){rView.did=1}}}
 function rSide(){
  let h=['一','二','三','四','五','六','日'].map(x=>`<span class="h">${x}</span>`).join('')+'<span></span>';const t=today();
- for(let d=1;d<=31;d++){const inT=d>=14&&d<=18,isT=t.y===2026&&t.mo===11&&t.d===d;h+=`<span class="${inT?'t':'o'}${inT&&view==='day'&&d-14===cur?' cur':''}${isT?' td':''}"${inT?` data-cur="${d-14}" role="button" tabindex="0"`:''}>${d}</span>`}
+ for(let d=1;d<=31;d++){const inT=d>=14&&d<=27,isT=t.y===2026&&t.mo===11&&t.d===d;h+=`<span class="${inT?'t '+DAYS[d-14].leg:'o'}${inT&&view==='day'&&d-14===cur?' cur':''}${isT?' td':''}"${inT?` data-cur="${d-14}" role="button" tabindex="0"`:''}>${d}</span>`}
  $('mm').innerHTML=h;
  const dec=SLOTS.map(leader),n=dec.filter(Boolean).length;
- $('pf').innerHTML=FAM.map(k=>{const hit=dec.filter(o=>o&&o.w.includes(k)).length;return `<button data-f="${k}" aria-pressed="${filt.includes(k)}" style="color:${P[k].c}"><span class="cb"></span><span style="color:var(--ink)">${P[k].n}</span><small>${n?Math.round(hit/n*100)+'%':'－'}</small></button>`}).join('');
- const eff=dec.reduce((a,o)=>a+(o?o.e:0),0),mx=dec.reduce((a,o)=>a+(o?3:0),0),ti=mx?Math.round(eff/mx*100):0;
+ $('pf').innerHTML=FAM.map(k=>{const my=SLOTS.filter(x=>x.ppl.includes(k)).map(leader),n=my.filter(Boolean).length,hit=my.filter(o=>o&&o.w.includes(k)).length;return `<button data-f="${k}" aria-pressed="${filt.includes(k)}" style="color:${P[k].c}"><span class="cb"></span><span style="color:var(--ink)">${P[k].n}</span><small>${n?Math.round(hit/n*100)+'%':'－'}</small></button>`}).join('');
+ const dm=SLOTS.filter(x=>x.ppl.includes('m')).map(leader),eff=dm.reduce((a,o)=>a+(o?o.e:0),0),mx=dm.reduce((a,o)=>a+(o?3:0),0),ti=mx?Math.round(eff/mx*100):0;
  {let nn=0,dn=0;DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{let key=null;if(!it.id&&it.tk)key='tk:f'+di+'-'+k;else if(it.id){const L=leader(it);if(L&&L.tk&&L.tk!=='F')key='tk:'+it.id+':'+it.o.indexOf(L)}if(key){nn++;if(S.done[key])dn++}}));$('tixs').textContent=`而家要訂 ${nn} 樣，已訂 ${dn} 樣。`}
  $('tired').textContent=n?`媽咪攰度 ${ti}%${ti>55?'，要加休息！':''}${dec.some(o=>o&&o.ic==='chips')?'':'；爸爸未有賭場！'}`:'未有人投票'}
 function rMe(){$('mea').textContent=me?P[me].n[0]:'?';$('mea').style.background=me?P[me].c:'var(--k-gray)';$('men').textContent=me?P[me].n:'揀你係邊個'}
 function links(o){let h='';if(o.u)h+=`<a class="lk" href="${o.u}" target="_blank" rel="noopener">官網／預訂 ↗</a>`;if(o.m)h+=`<a class="lk" href="${MAP(o.m)}" target="_blank" rel="noopener">地圖 ↗</a>`;return h}
-function findEv(key){if(key[0]==='c'){const c=S.custom.find(x=>'c'+x.id===key);if(!c)return null;const di=c.d-14;return evOf(di).find(e=>e.key===key)}const di=+key.split('-')[0];return evOf(di).find(e=>e.key===key)}
+function findEv(key){return allEv().find(e=>e.key===key)}
+const hh=v=>String(Math.floor(v)).padStart(2,'0')+':'+String(Math.round((v%1)*60)).padStart(2,'0');
+const tmIn=v=>{const m=/^(\d{1,2}):(\d{2})/.exec(v||'');return m?+m[1]+Math.round(+m[2]/15)/4:NaN};
+let draft=null;
+function openNew(dd,a,b,t){if(!need())return;a=Math.max(H0,Math.min(H1-.5,a));b=Math.max(a+.25,Math.min(H1,b));draft={d:dd,a,b,t:t||''};openKey='new';rSheet();setTimeout(()=>{const i=$('nn');if(i)i.focus()},60)}
+const dayOpts=dd=>DAYS.map(x=>`<option value="${x.dd}"${x.dd===dd?' selected':''}>${x.dd}/12（${x.wd}）${x.leg==='mel'?' 墨爾本':x.leg==='syd'?' 悉尼':''}</option>`).join('');
+const timeRow=(dd,a,b,ids)=>`<div class="ter"><select id="${ids[0]}" aria-label="日子">${dayOpts(dd)}</select><input type="time" id="${ids[1]}" value="${hh(a)}" step="900" aria-label="開始"><span>至</span><input type="time" id="${ids[2]}" value="${hh(Math.min(b,23.99))}" step="900" aria-label="結束"></div>`;
 function rSheet(){
  const pan=$('pan');if(openKey===null){$('sheet').classList.add('hide');return}
+ if(openKey==='new'&&draft){pan.innerHTML=`<div class="ph" style="background:var(--k-sea)"><h2 id="sht">新增活動</h2><p>12月${draft.d}日 · ${rng(draft.a,draft.b)}</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb"><form id="nfm" class="fm"><label>做咩？<input type="text" id="nn" maxlength="40" required value="${esc(draft.t)}" placeholder="例如：Pacific Fair 行街"></label><label>時間${timeRow(draft.d,draft.a,draft.b,['nd','na','nb'])}</label><label>地點／備註（可以留空）<input type="text" id="nx" maxlength="80" placeholder="例如：Broadbeach"></label><div class="acts"><button class="btn" type="submit">新增</button><button class="btn g" type="button" data-close>取消</button></div></form></div>`;$('sheet').classList.remove('hide');return}
  if(openKey==='me'){pan.innerHTML=`<div class="ph" style="background:var(--ink);color:var(--bg)"><h2 id="sht">你係邊位？</h2><p>揀咗先可以投票、新增活動、上載相片</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb"><div class="who">${Object.keys(P).map(k=>`<button class="chip" data-me="${k}" aria-pressed="${me===k}"><span class="av" style="background:${P[k].c}">${P[k].n[0]}</span>${P[k].n}<small>${P[k].t}</small></button>`).join('')}</div></div>`}
  else if(String(openKey).startsWith('x')){const e=EVS[+openKey.slice(1)];pan.innerHTML=`<div class="ph" style="background:${col(e.ic)}"><h2 id="sht">${e.n}</h2><p>${e.w}</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb"><p class="d">${e.d}</p><div class="acts"><a class="lk" href="${e.u}" target="_blank" rel="noopener">詳情 ↗</a></div></div>`}
- else{const e=findEv(openKey);if(!e){openKey=null;rSheet();return}const di=e.cus?e.cus.d-14:+openKey.split('-')[0],d=DAYS[di];
+ else{const e=findEv(openKey);if(!e){openKey=null;rSheet();return}const d=DAYS[e.di]||DAYS[0];
   let body='';
   if(e.slot){const v=S.votes[e.slot.id]||{};body=`<p class="d">${esc(e.slot.q)} 撳「投呢個」，再撳一次取消。</p>`+e.slot.o.map((o,i)=>{const vs=(v[i]||[]).filter(x=>P[x]),mine=me&&vs.includes(me);
    return `<div class="op${e.L===o?' win':''}${mine?' mine':''}"><div class="ophd"><i style="background:${col(o.ic)}"></i><b>${o.n}</b>${o.tk?`<span class="tg ${o.tk}">${TKL[o.tk]}</span>`:''}</div><span class="d">${o.d}</span><span class="dots">${o.w.split('').map(k=>`<span class="dot" style="background:${P[k].c}"></span>`).join('')} 啱${o.w.split('').map(k=>P[k].n).join('、')}</span>${vs.length?`<span class="vs">${vs.map(x=>`<span class="v" style="background:${P[x].c}">${P[x].n}</span>`).join('')}</span>`:''}<div class="acts">${links(o)}<button class="vote" data-s="${e.slot.id}" data-i="${i}">${mine?'已投 ✓':'投呢個'}</button></div></div>`}).join('')}
-  else if(e.cus){body=`<p class="d">${esc(P[e.cus.w]?P[e.cus.w].n:'')} 新增嘅活動</p><div class="acts"><a class="lk" href="${MAP(e.cus.t+' Gold Coast')}" target="_blank" rel="noopener">地圖 ↗</a>${me===e.cus.w||me==='l'?`<button class="btn g" data-del="${e.cus.id}">刪除</button>`:''}</div>`}
+  else if(e.cus){body=`<p class="d">${esc(P[e.cus.w]?P[e.cus.w].n:'')} 新增嘅活動${e.cus.x?'：'+esc(e.cus.x):''}</p><form class="fm" id="cfm" data-cid="${esc(e.cus.id)}"><label>名稱<input type="text" id="cn" maxlength="40" value="${esc(e.cus.t)}"></label><label>地點／備註<input type="text" id="cx" maxlength="80" value="${esc(e.cus.x||'')}"></label><div class="acts"><button class="btn s" type="submit">儲存名稱</button><a class="lk" href="${MAP((e.cus.x||e.cus.t)+' '+({gc:'Gold Coast',mel:'Melbourne',syd:'Sydney'}[(DAYS[e.di]||{}).leg]||''))}" target="_blank" rel="noopener">地圖 ↗</a>${me===e.cus.w||me==='l'?`<button class="btn g" type="button" data-del="${esc(e.cus.id)}">刪除</button>`:''}</div></form>`}
   else body=`<p class="d">${esc(e.sub)}</p>`;
-  pan.innerHTML=`<div class="ph" style="background:${ecol(e)}"><h2 id="sht">${esc(e.ttl)}</h2><p>12月${d.dd}日 星期${d.wd} · ${rng(e.a,e.b)}</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb">${body}</div>`}
+  body+=`<div class="te"><b>改時間</b>${timeRow(d.dd,e.a,e.b,['ted','tea','teb'])}<div class="acts"><button class="btn s" data-tset="${e.key}">儲存時間</button>${e.moved?`<button class="btn g" data-treset="${e.key}">還原原本時間</button>`:''}</div><small class="when">亦可以喺日曆直接拖方塊；拖底部改長短；手機要長按一陣先拖。</small></div>`;
+  pan.innerHTML=`<div class="ph" style="background:${ecol(e)}"><h2 id="sht">${esc(e.ttl)}</h2><p>12月${d.dd}日 星期${d.wd} · ${rng(e.a,e.b)}${e.moved?' · 已調整':''}</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb">${body}</div>`}
  $('sheet').classList.remove('hide')}
 function ck(arr,el){$(el).innerHTML=arr.map(a=>{const by=S.done[a[0]];return `<button class="ck${by?' on':''}" data-ck="${a[0]}"><span class="bx"></span><span class="tx">${a[1]}<small>${a[2]||''}${by&&P[by]?(a[2]?' · ':'')+P[by].n+' 剔咗':''}</small></span></button>`}).join('')}
 function rNotes(){$('notes').innerHTML=S.notes.slice(-40).reverse().map(n=>`<li><b style="color:${P[n.w]?P[n.w].c:'inherit'}">${esc(P[n.w]?P[n.w].n:'?')}</b>：${esc(n.x)}</li>`).join('')||'<li style="color:var(--mute)">未有留言</li>'}
@@ -408,7 +500,7 @@ async function act(fn,msg){
 function need(){if(me)return true;openKey='me';rSheet();flash('請先揀你係邊位');return false}
 function parse(s){
  let t=s.trim(),d=null,a=null,b=null;
- const md=t.match(/(?:12月)?\s*(1[4-8])\s*(?:號|日|\/12)/);if(md){d=+md[1];t=t.replace(md[0],' ')}
+ const md=t.match(/(?:12月)?\s*(1[4-9]|2[0-7])\s*(?:號|日|\/12)/);if(md){d=+md[1];t=t.replace(md[0],' ')}
  let pm=/下午|晚上|夜晚|pm/i.test(t),am=/上午|朝早|早上|am/i.test(t);
  const mt=t.match(/(\d{1,2})(?:[:：](\d{2})|點(半)?|(?=\s*[ap]m))(?:\s*(?:-|–|至|到)\s*(\d{1,2})(?:[:：](\d{2})|點(半)?)?)?/);
  if(mt){a=+mt[1]+(mt[2]?+mt[2]/60:mt[3]?.5:0);if(mt[4])b=+mt[4]+(mt[5]?+mt[5]/60:mt[6]?.5:0);t=t.replace(mt[0],' ')}
@@ -417,13 +509,18 @@ function parse(s){
  if(d===null)d=DAYS[cur].dd;if(a===null)a=12;a=Math.max(H0,Math.min(22.5,a));if(b===null||b<=a)b=Math.min(H1,a+1.5);
  return{d,a,b,t:t.slice(0,40)}}
 $('qi').addEventListener('input',()=>{const v=$('qi').value;if(!v.trim()){$('pv').textContent='';return}const p=parse(v);$('pv').textContent=`12月${p.d}日 ${rng(p.a,p.b)} ${p.t||'（未有名）'}`});
-$('qa').addEventListener('submit',e=>{e.preventDefault();if(!need())return;const p=parse($('qi').value);if(!p.t){flash('請寫埋做咩');return}
+$('qa').addEventListener('submit',e=>{e.preventDefault();if(!need())return;const p=parse($('qi').value);if(!p.t){openNew(p.d,p.a,p.b,'');return}
  const item={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),w:me,...p};$('qi').value='';$('pv').textContent='';cur=p.d-14;act(x=>{if(!x.custom.some(c=>c.id===item.id))x.custom.push(item)},'已加入 12月'+p.d+'日')});
 document.addEventListener('click',e=>{
  const t=e.target;
  if(t.closest('[data-close]')||t.id==='sheet'){openKey=null;rSheet();return}
  const vw=t.closest('[data-view]');if(vw){view=vw.dataset.view;try{localStorage.setItem('o-view',view)}catch(x){}all();return}
- const cu=t.closest('[data-cur]');if(cu){cur=+cu.dataset.cur;if(view==='week'&&innerWidth<760)view='day';if(view==='list')view='day';all();return}
+ if(justDragged&&t.closest('.blk'))return;
+ const lg=t.closest('[data-leg]');if(lg){leg=lg.dataset.leg;all();return}
+ const ts=t.closest('[data-tset]');if(ts){if(!need())return;let a=tmIn($('tea').value),b=tmIn($('teb').value);const dd=+$('ted').value;
+  if(isNaN(a)||isNaN(b)){flash('請填好時間');return}if(b<=a){flash('結束要遲過開始');return}a=Math.max(H0,a);b=Math.min(H1,b);setTime(ts.dataset.tset,dd,a,b);openKey=null;rSheet();return}
+ const tr=t.closest('[data-treset]');if(tr){const k=tr.dataset.treset;openKey=null;rSheet();act(x=>{delete x.times[k]},'已還原');return}
+ const cu=t.closest('[data-cur]');if(cu){cur=+cu.dataset.cur;leg=DAYS[cur].leg;if(view==='week'&&innerWidth<760)view='day';if(view==='list')view='day';all();return}
  const f=t.closest('[data-f]');if(f){const k=f.dataset.f;filt=filt.includes(k)?filt.filter(x=>x!==k):[...filt,k];try{localStorage.setItem('o-filt',JSON.stringify(filt))}catch(x){}all();return}
  if(t.closest('#meb')){openKey='me';rSheet();return}
  const c=t.closest('[data-me]');if(c){me=c.dataset.me;try{localStorage.setItem('o-me',me)}catch(x){}openKey=null;all();rSheet();flash('你好，'+P[me].n+'！');return}
@@ -435,6 +532,39 @@ document.addEventListener('click',e=>{
  const k=t.closest('[data-ck]');if(k){if(!need())return;const id=k.dataset.ck,on=!!S.done[id],who=me;act(x=>{if(on)delete x.done[id];else x.done[id]=who});return}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&openKey!==null){openKey=null;rSheet()}if(e.key==='Enter'&&e.target.matches('.mm [data-cur]')){e.target.click()}});
+let drag=null,justDragged=false;
+const Hpx=()=>{const c=document.querySelector('.col');return c?c.getBoundingClientRect().height/(H1-H0):52};
+function setTime(key,dd,a,b){const who=me;act(x=>{if(key[0]==='c'){const c=x.custom.find(c=>'c'+c.id===key);if(c){c.d=dd;c.a=a;c.b=b}}else x.times[key]={d:dd,a,b,w:who}},'已改時間：12月'+dd+'日 '+rng(a,b))}
+function startDrag(){if(!drag||drag.on)return;if(!me){drag=null;need();return}drag.on=true;drag.el.classList.add('drg');try{drag.el.setPointerCapture(drag.id)}catch(x){}try{navigator.vibrate&&navigator.vibrate(15)}catch(x){}}
+let sel=null,lastPT='mouse';
+const hourAt=(col,y)=>{const r=col.getBoundingClientRect();return H0+Math.max(0,Math.min(H1-H0,(y-r.top)/r.height*(H1-H0)))};
+document.addEventListener('pointerdown',e=>{lastPT=e.pointerType;if(e.pointerType!=='mouse'||e.button>0)return;const col=e.target.closest('.col');if(!col||e.target.closest('.blk'))return;
+ const h=Math.floor(hourAt(col,e.clientY)*2)/2,el=document.createElement('div');el.className='selb';col.appendChild(el);sel={col,el,h0:h,a:h,b:h+1,di:+col.dataset.day};
+ el.style.top=`calc(${sel.a-H0} * var(--H))`;el.style.height=`calc(1 * var(--H))`;el.textContent=rng(sel.a,sel.b);e.preventDefault()});
+document.addEventListener('pointermove',e=>{if(!sel)return;const h=Math.round(hourAt(sel.col,e.clientY)*4)/4;if(h>=sel.h0){sel.a=sel.h0;sel.b=Math.max(sel.h0+.25,h)}else{sel.a=h;sel.b=sel.h0+.5}
+ sel.el.style.top=`calc(${sel.a-H0} * var(--H))`;sel.el.style.height=`calc(${sel.b-sel.a} * var(--H))`;sel.el.textContent=rng(sel.a,sel.b)});
+document.addEventListener('pointerup',()=>{if(!sel)return;const s2=sel;sel=null;s2.el.remove();justDragged=true;setTimeout(()=>{justDragged=false},350);openNew(DAYS[s2.di].dd,s2.a,s2.b,'')});
+document.addEventListener('click',e=>{if(lastPT==='mouse'||justDragged)return;const col=e.target.closest('.col');if(!col||e.target.closest('.blk'))return;const h=Math.floor(hourAt(col,e.clientY)*2)/2;openNew(DAYS[+col.dataset.day].dd,h,h+1,'')});
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.blk');if(!b||e.button>0)return;const ev=findEv(b.dataset.ev);if(!ev)return;
+ drag={el:b,ev,rz:!!e.target.closest('.rz'),x0:e.clientX,y0:e.clientY,a:ev.a,b:ev.b,di:ev.di,on:false,touch:e.pointerType!=='mouse',id:e.pointerId,timer:null};
+ if(drag.touch)drag.timer=setTimeout(startDrag,380)});
+document.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x0,dy=e.clientY-drag.y0;
+ if(!drag.on){if(drag.touch){if(Math.hypot(dx,dy)>8){clearTimeout(drag.timer);drag=null}return}if(Math.hypot(dx,dy)<5)return;startDrag();if(!drag)return}
+ e.preventDefault();const H=Hpx(),dh=Math.round(dy/H*4)/4,len=drag.b-drag.a;
+ if(drag.rz){drag.na=drag.a;drag.nb=Math.min(H1,Math.max(drag.a+.25,drag.b+dh));drag.nd=drag.di}
+ else{drag.na=Math.min(H1-len,Math.max(H0,drag.a+dh));drag.nb=drag.na+len;const col=document.elementsFromPoint(e.clientX,e.clientY).find(x=>x.classList&&x.classList.contains('col'));if(col){drag.nd=+col.dataset.day;if(drag.el.parentNode!==col)col.appendChild(drag.el)}else if(drag.nd==null)drag.nd=drag.di}
+ const st=drag.el.style;st.top=`calc(${drag.na-H0} * var(--H))`;st.height=`calc(${drag.nb-drag.na} * var(--H) - 2px)`;if(!drag.rz){st.left='3px';st.width='calc(100% - 6px)'}
+ const tl=drag.el.querySelector('.tm');if(tl)tl.textContent=rng(drag.na,drag.nb)},{passive:false});
+document.addEventListener('touchmove',e=>{if(drag&&drag.on)e.preventDefault()},{passive:false});
+function endDrag(){if(!drag)return;clearTimeout(drag.timer);const d=drag;drag=null;if(!d.on)return;justDragged=true;setTimeout(()=>{justDragged=false},350);d.el.classList.remove('drg');
+ const nd=d.nd==null?d.di:d.nd;if(d.na==null||(d.na===d.a&&d.nb===d.b&&nd===d.di)){all();return}setTime(d.ev.key,nd+14,d.na,d.nb)}
+document.addEventListener('pointerup',endDrag);
+document.addEventListener('pointercancel',()=>{if(drag&&!drag.on){clearTimeout(drag.timer);drag=null}else endDrag()});
+document.addEventListener('contextmenu',e=>{if(e.target.closest('.blk'))e.preventDefault()});
+document.addEventListener('submit',e=>{const fm=e.target;
+ if(fm.id==='nfm'){e.preventDefault();const t=$('nn').value.trim();if(!t){flash('請寫埋做咩');return}let a=tmIn($('na').value),b=tmIn($('nb').value);const dd=+$('nd').value;if(isNaN(a)||isNaN(b)||b<=a){flash('結束要遲過開始');return}a=Math.max(H0,a);b=Math.min(H1,b);
+  const item={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),w:me,d:dd,a,b,t:t.slice(0,40),x:$('nx').value.trim().slice(0,80)};openKey=null;draft=null;rSheet();cur=dd-14;leg=DAYS[cur].leg;act(x=>{if(!x.custom.some(c=>c.id===item.id))x.custom.push(item)},'已加入 12月'+dd+'日 '+rng(a,b))}
+ if(fm.id==='cfm'){e.preventDefault();if(!need())return;const id=fm.dataset.cid,t=$('cn').value.trim().slice(0,40),xx=$('cx').value.trim().slice(0,80);if(!t)return;openKey=null;rSheet();act(x=>{const c=x.custom.find(c=>c.id===id);if(c){c.t=t;c.x=xx}},'已更新')}});
 $('nf').addEventListener('submit',e=>{e.preventDefault();if(!need())return;const t=$('nt').value.trim();if(!t)return;const n={w:me,x:t.slice(0,200),id:Date.now().toString(36)};$('nt').value='';act(x=>{if(!x.notes.some(y=>y.id===n.id))x.notes.push(n);if(x.notes.length>60)x.notes=x.notes.slice(-60)},'已貼出')});
 async function shrink(f){try{const b=await createImageBitmap(f),k=Math.min(1,1600/Math.max(b.width,b.height)),c=document.createElement('canvas');c.width=Math.round(b.width*k);c.height=Math.round(b.height*k);c.getContext('2d').drawImage(b,0,0,c.width,c.height);return await new Promise(r=>c.toBlob(x=>r(x||f),'image/jpeg',.82))}catch(e){return f}}
 $('file').addEventListener('change',async e=>{const fs=[...e.target.files];e.target.value='';if(!fs.length||!need()||!DB)return;flash('上載緊 '+fs.length+' 張…');const add=[];
