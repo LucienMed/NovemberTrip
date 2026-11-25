@@ -186,8 +186,29 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
 .lkx{border:0;background:var(--hl);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;line-height:1}
 .lkf input{flex:1 1 160px;font:inherit;font-size:16px;min-height:44px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
 .tr.hl{grid-template-columns:minmax(0,1fr);gap:8px}.tr.hl .acts{justify-content:flex-start;grid-column:1!important}
+.gd{padding:8px max(2vw,14px) 30px;max-width:1100px}
+.gh{margin:10px 0 6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chips button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;min-height:40px;cursor:pointer;font-weight:700}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:14px;margin-top:12px}
+.fc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:inset 4px 0 0 var(--cc)}
+.fc.no{opacity:.6}
+.fh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.fh b{font-size:17px;line-height:1.3}
+.pr{color:var(--mute);font-weight:700;white-space:nowrap}
+.fc .meta{font-size:13px;color:var(--cc);font-weight:700}
+.fc p{margin:0;font-size:14px;color:var(--mute)}.fc .dish{color:var(--ink)}
+.fc .acts{margin-top:auto;padding-top:6px}
+.like{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:6px 10px;min-height:40px;cursor:pointer;font-weight:700;font-size:14px}
+.like .hrt{width:14px;height:14px;background:var(--mute);clip-path:path('M7 13 L1.5 7.5 A3.2 3.2 0 0 1 7 3 A3.2 3.2 0 0 1 12.5 7.5 Z')}
+.like.on{border-color:var(--red);color:var(--red)}.like.on .hrt{background:var(--red)}
+.lav{display:inline-flex}.lav i{width:20px;height:20px;border-radius:50%;color:#fff;font-style:normal;font-size:11px;display:grid;place-items:center;margin-left:-4px;border:2px solid var(--card)}
+.btn.sm{min-height:40px;padding:6px 12px;font-size:14px}
+.addf{margin-top:24px;background:var(--side);border-radius:16px;padding:16px}
+.addf input,.addf select{font:inherit;font-size:16px;min-height:44px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);flex:1 1 140px}
+.seg{flex-wrap:wrap}
 .hide{display:none!important}
-@media(max-width:600px){.tr{grid-template-columns:44px minmax(0,1fr)}.tr .acts{grid-column:2}}
+@media(max-width:600px){.seg button{padding:7px 10px}.tr{grid-template-columns:44px minmax(0,1fr)}.tr .acts{grid-column:2}}
 @media(max-width:900px){.top{position:static}.main{order:-1}.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.strip{display:flex}.ch{top:auto;position:static}.lday{top:0}}
 @media(max-width:600px){.top h1{font-size:20px}.qa .pv{display:none}.li{grid-template-columns:72px 6px minmax(0,1fr)}.pan{width:100%;height:auto;max-height:88vh;margin-top:auto;border-radius:20px 20px 0 0}.sheet{align-items:flex-end}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -198,7 +219,7 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
 <body>
 <div class="top">
   <h1>O家畢業遊 <span>12月</span></h1>
-  <div class="seg" role="group" aria-label="檢視"><button data-view="week">週</button><button data-view="day">日</button><button data-view="list">清單</button><button data-view="tix">要訂</button></div>
+  <div class="seg" role="group" aria-label="檢視"><button data-view="week">週</button><button data-view="day">日</button><button data-view="list">清單</button><button data-view="tix">要訂</button><button data-view="food">食</button><button data-view="play">玩</button></div>
   <div class="sp"></div>
   <button class="meb" id="meb" type="button"><span class="av" id="mea" style="background:var(--k-gray)">?</span><span id="men">揀你係邊個</span></button>
 </div>
@@ -248,7 +269,7 @@ const CFG=window.TRIP_CONFIG||{};const DB=!!(CFG.url&&CFG.key&&!/YOUR/.test(CFG.
 const HDR={apikey:CFG.key,Authorization:'Bearer '+CFG.key};
 const PHOTO=p=>CFG.url.replace(/\/$/,'')+'/storage/v1/object/public/photos/'+p.split('/').map(encodeURIComponent).join('/');
 let S;try{S=JSON.parse(document.getElementById('state').textContent)}catch(e){S={}}
-const norm=x=>{x=x&&typeof x==='object'?x:{};x.votes=x.votes||{};x.done=x.done||{};x.notes=x.notes||[];x.photos=x.photos||[];x.custom=x.custom||[];x.times=x.times&&typeof x.times==='object'?x.times:{};x.links=x.links&&typeof x.links==='object'?x.links:{};return x};
+const norm=x=>{x=x&&typeof x==='object'?x:{};x.votes=x.votes||{};x.done=x.done||{};x.notes=x.notes||[];x.photos=x.photos||[];x.custom=x.custom||[];x.times=x.times&&typeof x.times==='object'?x.times:{};x.links=x.links&&typeof x.links==='object'?x.links:{};x.likes=x.likes&&typeof x.likes==='object'?x.likes:{};x.food=Array.isArray(x.food)?x.food:[];return x};
 if(!DB){try{const l=JSON.parse(localStorage.getItem('o-state')||'null');if(l)S=l}catch(e){}}
 S=norm(S);
 const P={g:{n:'姑姐',c:'var(--pg)',t:'落水派'},m:{n:'媽咪',c:'var(--pm)',t:'行街 chill 派'},d:{n:'爸爸',c:'var(--pd)',t:'賭場食家派'},b:{n:'哥哥',c:'var(--pb)',t:'乜都 OK 派'},l:{n:'Leo',c:'var(--pl)',t:'主人家'}};
@@ -267,7 +288,7 @@ const DAYS=[
  {a:15.25,b:18,f:'Airbnb check-in，休息',x:'抖下先',ic:'rest'},
  {a:18.5,b:20.5,id:'s14d',q:'第一晚點過？',o:[
   {n:'海邊散步，簡單晚餐',d:'飛完機，早啲瞓',w:'gmb',e:1,ic:'beach'},
-  {n:'Benowa Highland Court',d:'Benowa 粵菜館，有生猛海鮮',w:'dmb',e:1,ic:'bowl',m:'Benowa Highland Court Gold Coast'},
+  {n:"Hurricane's Grill（Surfers Paradise）",d:'燒肉、豬肋骨，小紅書食評畀最高分',w:'dmb',e:1,ic:'bowl',m:"Hurricane's Grill Surfers Paradise"},
   {n:'The Star 食飯，爸爸小試牛刀',d:'喺 Broadbeach，對面就係 Pacific Fair',w:'db',e:2,ic:'chips',m:'The Star Gold Coast'}]}]},
 {dd:15,wd:'二',tt:'Leo 畢業禮',ev:[0],items:[
  {a:7.5,b:9,f:'揸車去 UQ St Lucia',x:'預留 1.5 小時防塞車；UQ 建議泊 P10 停車場（UQ Centre 隔籬）',ic:'car'},
@@ -283,25 +304,32 @@ const DAYS=[
   {n:'Wave Break Island 浮潛團',d:'約 4 小時，有浮具，唔識游水都得；出發時間跟潮水',w:'gb',e:2,ic:'snorkel',u:'https://experienceoz.com.au/en/gold-coast/qld-scuba-snorkelling'},
   {n:'自己揸船遊 Broadwater',d:'免船牌，帶車牌做身份證明；可以泊埋小島落水',w:'gmdb',e:1,ic:'boat',u:'https://aquaadventures.rezdy.com/484385/6-person-half-day-boat-hire'},
   {n:'Kayak 加浮潛',d:'扒艇去 Wave Break Island，有機會見海豚',w:'gb',e:3,ic:'kayak',u:'https://experienceoz.com.au/en/gold-coast/activities/snokelling-and-scuba-diving'},
-  {n:'淨係去海灘 chill',d:'Broadbeach 沙灘，紅黃旗之間游水',w:'m',e:0,ic:'beach',m:'Broadbeach beach Gold Coast'}]},
+  {n:'淨係去海灘 chill',d:'Broadbeach 沙灘，紅黃旗之間游水',w:'m',e:0,ic:'beach',m:'Broadbeach beach Gold Coast'},
+  {n:'Jet boat 快艇加滑翔傘',d:'小紅書兩樣都畀最高評價，又刺激又好玩；有合埋嘅套票',w:'gb',e:2,ic:'boat',m:'Gold Coast jet boat parasailing Main Beach'}]},
  {a:14,b:17.5,id:'s16p',q:'下午做咩？',o:[
   {n:'分頭：媽咪 Pacific Fair，爸爸 The Star',d:'兩個地方喺 Broadbeach 對面馬路',w:'md',e:1,ic:'bag',m:'Pacific Fair Broadbeach'},
   {n:'返 Airbnb 瞓晏覺',d:'落完水抖返夠',w:'m',e:0,ic:'rest'},
-  {n:'SkyPoint 觀景台',d:'Surfers Paradise 高空睇成個海岸',w:'gb',e:1,ic:'city',m:'SkyPoint Observation Deck'}]},
+  {n:'SkyPoint 觀景台',d:'Surfers Paradise 高空睇成個海岸',w:'gb',e:1,ic:'city',m:'SkyPoint Observation Deck'},
+  {n:'Aquaduck 鴨仔船',d:'先喺陸地遊市區，再直接落河變快艇；坐住玩，全家都啱',w:'gmdb',e:0,ic:'boat',m:'Aquaduck Surfers Paradise'}]},
  {a:18,b:22,w:'gm',f:'螢火蟲夜遊：Tamborine 雨林（姑姐、媽咪）',x:'其他人可以自己食晚飯。18:15 出發，大約 3.5 小時；有甜品熱飲。5pm 前食定晚飯或者小食，著行山鞋、帶薄外套。接送點：Broadbeach、Surfers Paradise、Main Beach、Southport、Helensvale 站',ic:'lights',tk:'T',m:'Curtis Falls Tamborine Mountain',links:[{t:'Headout：Tamborine 雨林團（6:15pm）',u:'https://www.headout.com/day-trips/evening-rainforest-glow-worm-experience-e-15443/'},{t:'Viator：Natural Bridge 螢火蟲洞團（另一選擇）',u:'https://www.viator.com/en-AU/tours/Surfers-Paradise/Glow-Worm-Cave-and-Natural-Bridge-Tour-from-Gold-Coast/d22738-2138G37'}]}]},
 {dd:17,wd:'四',tt:'自由活動',ev:[1,2],items:[
  {a:9,b:11.5,id:'s17a',q:'上午？',o:[
   {n:'第二轉落水',d:'琴日揀剩嗰樣，或者再出海',w:'gb',e:2,ic:'snorkel'},
   {n:'Burleigh Heads 海灘早餐',d:'海景 cafe，行下海邊',w:'gmb',e:1,ic:'cafe',m:'Burleigh Heads'},
-  {n:'瞓到自然醒',d:'假期嚟㗎嘛',w:'m',e:0,ic:'rest'}]},
- {a:12,b:13.5,id:'s17l',q:'飲茶去邊？',o:[
+  {n:'瞓到自然醒',d:'假期嚟㗎嘛',w:'m',e:0,ic:'rest'},
+  {n:'SkyPoint 觀景台早餐',d:'喺高處一邊食早餐一邊睇成個海岸，好 chill',w:'gmb',e:0,ic:'cafe',m:'SkyPoint Observation Deck'},
+  {n:'Burleigh Head 國家公園散步',d:'海岸散步路，風景好，有機會見野生動物',w:'gmb',e:1,ic:'koala',m:'Burleigh Head National Park'},
+  {n:'衝浪體驗班',d:'有教練教，想試就試',w:'gb',e:3,ic:'beach',m:'surf school Surfers Paradise'}]},
+ {a:12,b:13.5,id:'s17l',q:'17號午餐？',o:[
   {n:'Yum Cha Cuisine（Harbour Town）',d:'喺 outlet 入面，食完即刻行街',w:'mdb',e:1,ic:'bowl',u:'https://opentable.com.au/r/yum-cha-cuisine-harbour-town-biggera-waters'},
-  {n:'Yum Cha Gallery（Burleigh Waters）',d:'食客話好似香港味道',w:'db',e:1,ic:'bowl',m:'Yum Cha Gallery Burleigh Waters'},
-  {n:'Dragon Cove（Hope Island）',d:'評分好高嘅中菜館',w:'db',e:1,ic:'bowl',m:'Dragon Cove Chinese Cuisine Hope Island'}]},
+  {n:'Donto Sapporo 日本菜',d:'份量足，刺身新鮮；鰻魚重最推介',w:'gmdb',e:1,ic:'bowl',m:'Donto Sapporo Japanese Restaurant Gold Coast'},
+  {n:'More Thai（Surfers Paradise）',d:'Google 評分好高嘅泰菜',w:'gmb',e:1,ic:'bowl',m:'More Thai Surfers Paradise'},
+  {n:"Hurricane's Grill",d:'燒肉豬肋骨，爸爸應該鍾意',w:'dmb',e:1,ic:'bowl',m:"Hurricane's Grill Surfers Paradise"}]},
  {a:14,b:17,id:'s17p',q:'下午？',o:[
   {n:'Harbour Town Outlets',d:'黃金海岸最大 outlet',w:'mb',e:1,ic:'bag',m:'Harbour Town Premium Outlets Gold Coast'},
   {n:'The Star 再戰',d:'爸爸專場',w:'d',e:1,ic:'chips',m:'The Star Gold Coast'},
-  {n:'Airbnb 休息',d:'養精蓄銳',w:'gm',e:0,ic:'rest'}]},
+  {n:'Airbnb 休息',d:'養精蓄銳',w:'gm',e:0,ic:'rest'},
+  {n:'Paradise Country 農場',d:'澳洲農場動物，有樹熊早餐（要預訂）',w:'gmb',e:1,ic:'koala',m:'Paradise Country Oxenford'}]},
  {a:17.5,b:21,id:'s17n',q:'最後一晚？',o:[
   {n:'Airbnb BBQ（姑姐 plan）',d:'屋企人自己傾偈最舒服',w:'gmdb',e:1,ic:'bbq'},
   {n:'Movie World White Christmas',d:'17號有開，5:30pm 至 8:30pm；燈飾、巡遊，要另外買飛',w:'gmb',e:2,ic:'tree',u:'https://whitechristmas.com.au',m:'Warner Bros. Movie World'},
@@ -385,12 +413,41 @@ const EVS=[
 DAYS.forEach(d=>{d.leg=d.leg||'gc';d.ppl=d.ppl||'gmdb'});
 const LEGS=[{k:'gc',n:'黃金海岸',r:'14–18 全家'},{k:'mel',n:'墨爾本',r:'19–24'},{k:'syd',n:'悉尼',r:'25–27'}];
 const SLOTS=[];DAYS.forEach(d=>d.items.forEach(i=>{if(i.id){i.ppl=d.ppl;SLOTS.push(i)}}));
-const TK={s14d:{1:'B'},s15n:{0:'F'},s16a:{0:'B',1:'B',2:'B',3:'F'},s16p:{2:'T'},s16d:{0:'F',1:'B',2:'B',4:'T'},s17a:{0:'B'},s17l:{0:'B',1:'B',2:'B'},s18z:{0:'T',1:'T',2:'T'},s17n:{1:'T',2:'F'},s19n:{0:'F'},s20d:{0:'B',1:'B',2:'B'},s22d:{1:'F',2:'B'},s23d:{1:'B'},s24a:{0:'F',1:'F'},s24n:{0:'B'},s25n:{0:'B',1:'F',2:'F'},s26a:{1:'F'},s26p:{0:'T',1:'F'},s26n:{1:'T'},s27a:{1:'F'}};
+const TK={s14d:{1:'B'},s15n:{0:'F'},s16a:{0:'B',1:'B',2:'B',3:'F',4:'B'},s16p:{2:'T',3:'T'},s16d:{0:'F',1:'B',2:'B',4:'T'},s17a:{0:'B',3:'B',4:'F',5:'B'},s17l:{0:'B',3:'B'},s17p:{3:'T'},s18z:{0:'T',1:'T',2:'T'},s17n:{1:'T',2:'F'},s19n:{0:'F'},s20d:{0:'B',1:'B',2:'B'},s22d:{1:'F',2:'B'},s23d:{1:'B'},s24a:{0:'F',1:'F'},s24n:{0:'B'},s25n:{0:'B',1:'F',2:'F'},s26a:{1:'F'},s26p:{0:'T',1:'F'},s26n:{1:'T'},s27a:{1:'F'}};
 SLOTS.forEach(sl=>Object.entries(TK[sl.id]||{}).forEach(([i,v])=>sl.o[i].tk=v));
 DAYS[1].items[2].tk='B';
 const TKL={T:'要買飛',B:'要訂位',F:'免費／唔使訂'};
+const CUI={'中菜':'red','日本菜':'ind','西餐':'gold','泰菜':'grn','早餐':'sea','夜市':'pink','Fusion':'pink'};
+const FOOD=[
+ {id:'hur',n:"Hurricane's Grill & Bar",c:'西餐',city:'gc',area:'Surfers Paradise',p:'$$$',w:'dmb',d:'好出名嘅燒肉店，小紅書食評畀最高分',dish:'豬肋骨',m:"Hurricane's Grill Surfers Paradise"},
+ {id:'mthai',n:'More Thai',c:'泰菜',city:'gc',area:'Surfers Paradise',p:'$$',w:'gmb',d:'Google 評分好高，食評畀最高分',m:'More Thai Surfers Paradise'},
+ {id:'donto',n:'Donto Sapporo',c:'日本菜',city:'gc',area:'黃金海岸',p:'$$',w:'gmdb',d:'份量好足，刺身新鮮',dish:'鰻魚重、吉列雞咖喱',m:'Donto Sapporo Japanese Restaurant Gold Coast'},
+ {id:'maru',n:'Maruya',c:'日本菜',city:'gc',area:'黃金海岸',p:'$$',w:'db',d:'平實好食，份量大',dish:'照燒牛肉飯',m:'Maruya Japanese Restaurant Gold Coast'},
+ {id:'anim',n:'Animoto',c:'日本菜',city:'gc',area:'黃金海岸',p:'$$',w:'gm',d:'細細間隱藏小店，座位少，可能要等',dish:'鰻魚飯、三文魚親子丼',m:'Animoto Japanese Restaurant Gold Coast'},
+ {id:'nigi',n:'Nigiwai',c:'日本菜',city:'gc',area:'黃金海岸',p:'$$$$',w:'gm',d:'新開高級日本菜，環境擺盤靚，但真係貴',dish:'三文魚四季刺身拼盤',m:'Nigiwai Gold Coast'},
+ {id:'rick',n:'Rick Shores',c:'Fusion',city:'gc',area:'Burleigh Heads',p:'$$$',w:'gm',d:'海景一流好出名，但人多；食評覺得正餐一般，甜品值得試',dish:'甜品',m:'Rick Shores Burleigh Heads'},
+ {id:'yumcha',n:'Yum Cha Cuisine',c:'中菜',city:'gc',area:'Harbour Town',p:'$$',w:'mdb',d:'喺 outlet 入面飲茶，食完即刻行街',u:'https://opentable.com.au/r/yum-cha-cuisine-harbour-town-biggera-waters',m:'Yum Cha Cuisine Harbour Town'},
+ {id:'ycg',n:'Yum Cha Gallery',c:'中菜',city:'gc',area:'Burleigh Waters',p:'$$',w:'dm',d:'外賣平台好多食客話似香港味道',m:'Yum Cha Gallery Burleigh Waters'},
+ {id:'sky',n:'SkyPoint 觀景台早餐',c:'早餐',city:'gc',area:'Surfers Paradise',p:'$$',w:'gmb',d:'喺高處食早餐睇成個海岸，好 chill',m:'SkyPoint Observation Deck'},
+ {id:'mmk',n:'Miami Marketta 夜市',c:'夜市',city:'gc',area:'Miami',p:'$',w:'gmb',d:'逢星期三至六 5pm 起，世界各地街頭小食，唔使訂位',u:'https://www.miamimarketta.com',m:'Miami Marketta'},
+ {id:'melct',n:'墨爾本唐人街',c:'中菜',city:'mel',area:'Little Bourke St',p:'$$',w:'gm',d:'粵菜、點心選擇多，同 Rose Lane 住處一樣喺市中心',m:'Melbourne Chinatown Little Bourke Street'},
+ {id:'qvm',n:'Queen Victoria Market',c:'早餐',city:'mel',area:'市中心',p:'$',w:'gm',d:'星期二、四至日開；可以邊行邊食',m:'Queen Victoria Market'}
+];
+const PLAY=[
+ {id:'jet',n:'Jet boat 快艇加滑翔傘',city:'gc',w:'gb',e:2,tk:'B',d:'小紅書兩樣都畀最高評價，好刺激；有合埋嘅套票',m:'Gold Coast jet boat parasailing Main Beach'},
+ {id:'duck',n:'Aquaduck 鴨仔船',city:'gc',w:'gmdb',e:0,tk:'T',d:'陸上遊 Surfers 市區，再落河變快艇，坐住玩',m:'Aquaduck Surfers Paradise'},
+ {id:'skyp',n:'SkyPoint 觀景台',city:'gc',w:'gmb',e:0,tk:'T',d:'高空睇成個海岸，可以順便食早餐',m:'SkyPoint Observation Deck'},
+ {id:'burl',n:'Burleigh Head 國家公園',city:'gc',w:'gmb',e:1,tk:'F',d:'海岸散步路，風景好，有機會見野生動物',m:'Burleigh Head National Park'},
+ {id:'surf',n:'衝浪體驗班',city:'gc',w:'gb',e:3,tk:'B',d:'有教練教，想試就試',m:'surf school Surfers Paradise'},
+ {id:'para',n:'Paradise Country 農場',city:'gc',w:'gmb',e:1,tk:'T',d:'農場動物，有樹熊早餐（要預訂）',m:'Paradise Country Oxenford'},
+ {id:'glow',n:'螢火蟲夜遊',city:'gc',w:'gm',e:1,tk:'T',d:'已經放咗喺 16 號晚',m:'Curtis Falls Tamborine Mountain'},
+ {id:'dw',n:'Dreamworld',city:'gc',w:'gb',e:3,tk:'T',d:'過山車同機動遊戲，要成日',m:'Dreamworld Coomera'},
+ {id:'more',n:'Moreton Island 海豚島',city:'bne',w:'gb',e:2,tk:'B',d:'由 Brisbane 坐船出島，傍晚可以見野生海豚、睇沉船；要成日，今次行程未有空檔',m:'Tangalooma Island Resort'},
+ {id:'whale',n:'出海睇鯨魚',city:'gc',w:'',e:1,tk:'',d:'黃金海岸觀鯨季通常大約 6 至 11 月初，12 月已經過咗季，今次唔建議',no:true}
+];
+let foodC='全部',foodCity='all';
 const TIPS=[['姑姐嘅螢火蟲','黃金海岸夜遊團睇嘅主要係藍光蟲，12月至3月最好睇，夏天亦有機會見到真螢火蟲；記得著行山鞋、帶薄外套。'],['墨爾本住市中心','Airbnb 喺 Rose Lane（CBD），市中心大部分地方屬免費電車區，行街好方便。'],['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
-const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['glow','16號螢火蟲夜遊團（18:15）','Tamborine，2 位：姑姐、媽咪'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗'],['opera','悉尼歌劇院 Great Opera Hits','如果揀咗']];
+const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['glow','16號螢火蟲夜遊團（18:15）','Tamborine，2 位：姑姐、媽咪'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗'],['opera','悉尼歌劇院 Great Opera Hits','如果揀咗'],['jetb','Jet boat 加滑翔傘','如果揀咗']];
 const PACK=[['sun','防曬 SPF50+'],['hat','帽、太陽眼鏡'],['swim','泳衣、拖鞋、毛巾'],['lic','駕駛執照（揸車、租船身份證明）'],['sea','暈浪丸'],['suit','畢業禮靚衫'],['jac','薄外套（冷氣同墨爾本會凍）'],['plug','澳洲插頭轉換器']];
 const PRE=['16號落雨點算？','媽咪攰，想搵啲 chill 嘢做','爸爸想食好嘢中菜','有咩全家都啱玩？','墨爾本同悉尼應該點分日子？'];
 const $=id=>document.getElementById(id);
@@ -399,7 +456,7 @@ const hm=h=>{const H=Math.floor(h),M=Math.round((h-H)*60);return H+':'+String(M)
 const rng=(a,b)=>hm(a)+'–'+hm(b);
 let me=null,view=null,cur=0,filt=[];
 try{me=localStorage.getItem('o-me');view=localStorage.getItem('o-view');filt=JSON.parse(localStorage.getItem('o-filt')||'[]')}catch(e){}
-if(!P[me])me=null;if(!['week','day','list','tix'].includes(view))view=innerWidth<760?'day':'week';if(!Array.isArray(filt))filt=[];
+if(!P[me])me=null;if(!['week','day','list','tix','food','play'].includes(view))view=innerWidth<760?'day':'week';if(!Array.isArray(filt))filt=[];
 const today=()=>{const n=new Date(Date.now()+10*36e5);return{y:n.getUTCFullYear(),mo:n.getUTCMonth(),d:n.getUTCDate(),h:n.getUTCHours()+n.getUTCMinutes()/60}};
 {const t=today();if(t.y===2026&&t.mo===11&&t.d>=14&&t.d<=27)cur=t.d-14}
 let ro=false,ver=-1,busyC=false,openKey=null,leg=DAYS[cur].leg;
@@ -449,11 +506,28 @@ function tix(){
  <h3>一定要訂</h3><p>暫時投票領先，或者已經定咗嘅。訂好就剔，大家會見到邊個訂咗。</p>${need.map(row).join('')||'<p class="when">未有</p>'}
  <h3>改投嘅話就要訂</h3><p>其他選項，如果最後揀佢就要買飛或者訂位。</p>${other.map(row).join('')}
  <h3>免費／唔使訂</h3><p>去到就得。</p>${free.map(row).join('')}</div>`}
+const likeBtn=id=>{const l=(S.likes[id]||[]).filter(k=>P[k]),mine=me&&l.includes(me);return `<button class="like${mine?' on':''}" data-like="${esc(id)}" aria-pressed="${!!mine}"><span class="hrt" aria-hidden="true"></span>${mine?'想去':'想去？'}${l.length?`<span class="lav">${l.map(k=>`<i style="background:${P[k].c}">${P[k].n[0]}</i>`).join('')}</span>`:''}</button>`};
+const whoDots=w=>w?`<span class="dots">${w.split('').map(k=>`<span class="dot" style="background:${P[k].c}"></span>`).join('')} 啱${w.split('').map(k=>P[k].n).join('、')}</span>`:'';
+const CITY={gc:'黃金海岸',mel:'墨爾本',syd:'悉尼',bne:'Brisbane'};
+const firstDay=c=>{const i=DAYS.findIndex((d,j)=>j>=cur&&d.leg===c);const k=i>=0?i:DAYS.findIndex(d=>d.leg===c);return DAYS[k>=0?k:0].dd};
+function foodV(){
+ const list=FOOD.concat(S.food.map(f=>({...f,mine:true}))).filter(f=>(foodC==='全部'||f.c===foodC)&&(foodCity==='all'||f.city===foodCity));
+ list.sort((a,b)=>(S.likes[b.id]||[]).length-(S.likes[a.id]||[]).length);
+ const cats=['全部',...new Set(FOOD.concat(S.food).map(f=>f.c))];
+ return `<div class="gd"><div class="gh"><h2 class="s">食咩好</h2><p class="lead">揀咗之後撳「想去」，最多人想去會排最前；撳「加入行程」就放入日曆。資料參考小紅書同網上評價，出發前睇埋 Google 最新評分。</p>
+ <div class="chips">${[['all','全部城市'],['gc','黃金海岸'],['mel','墨爾本'],['syd','悉尼']].map(([k,n])=>`<button data-fcity="${k}" aria-pressed="${foodCity===k}">${n}</button>`).join('')}</div>
+ <div class="chips">${cats.map(c=>`<button data-fc="${esc(c)}" aria-pressed="${foodC===c}">${esc(c)}</button>`).join('')}</div></div>
+ <div class="fgrid">${list.map(f=>`<article class="fc" style="--cc:var(--k-${CUI[f.c]||'gray'})"><div class="fh"><b>${esc(f.n)}</b><span class="pr">${esc(f.p||'')}</span></div><span class="meta">${esc(f.c)} · ${esc(f.area||CITY[f.city]||'')}${f.mine?` · ${esc(P[f.w]?P[f.w].n:'')} 加`:''}</span><p>${esc(f.d||'')}</p>${f.dish?`<p class="dish">推介：${esc(f.dish)}</p>`:''}${f.mine?'':whoDots(f.w)}<div class="acts">${likeBtn(f.id)}${f.u&&okU(f.u)?`<a class="lk" href="${esc(f.u)}" target="_blank" rel="noopener">訂位 ↗</a>`:''}<a class="lk" href="${MAP(f.m||f.n+' '+(CITY[f.city]||''))}" target="_blank" rel="noopener">地圖 ↗</a><button class="btn g sm" data-addf="${esc(f.id)}">加入行程</button>${f.mine&&(me===f.w||me==='l')?`<button class="lkx" data-delf="${esc(f.id)}" aria-label="刪除">×</button>`:''}</div></article>`).join('')||'<p class="when">冇符合嘅餐廳</p>'}</div>
+ <form class="fm addf" id="addf"><b>自己加餐廳</b><div class="ter"><input type="text" id="afn" maxlength="40" placeholder="餐廳名" required aria-label="餐廳名"><select id="afc" aria-label="菜式">${Object.keys(CUI).map(c=>`<option>${c}</option>`).join('')}<option>其他</option></select><select id="afy" aria-label="城市"><option value="gc">黃金海岸</option><option value="mel">墨爾本</option><option value="syd">悉尼</option></select></div><input type="text" id="afd" maxlength="80" placeholder="點解想去／推介菜（可以留空）" aria-label="備註"><div class="acts"><button class="btn" type="submit">加入</button></div></form></div>`}
+function playV(){
+ const list=PLAY.slice().sort((a,b)=>(a.no?1:0)-(b.no?1:0)||(S.likes[b.id]||[]).length-(S.likes[a.id]||[]).length);
+ return `<div class="gd"><div class="gh"><h2 class="s">玩咩好</h2><p class="lead">小紅書同網上推介嘅好去處；好多已經放咗喺日曆投票入面，想加去其他時間就撳「加入行程」。</p></div>
+ <div class="fgrid">${list.map(x=>`<article class="fc${x.no?' no':''}" style="--cc:var(--k-${x.no?'gray':'sea'})"><div class="fh"><b>${esc(x.n)}</b>${x.tk?`<span class="tg ${x.tk}">${TKL[x.tk]}</span>`:''}</div><span class="meta">${esc(CITY[x.city]||'')}${x.no?'':` · 辛苦度 ${'●'.repeat(x.e)}${'○'.repeat(3-x.e)}`}</span><p>${esc(x.d)}</p>${whoDots(x.w)}${x.no?'':`<div class="acts">${likeBtn('p_'+x.id)}${x.m?`<a class="lk" href="${MAP(x.m)}" target="_blank" rel="noopener">地圖 ↗</a>`:''}<button class="btn g sm" data-addp="${esc(x.id)}">加入行程</button></div>`}</article>`).join('')}</div></div>`}
 function rView(){
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.view===view));
  $('strip').innerHTML=DAYS.map((d,i)=>`<button data-cur="${i}" aria-pressed="${view!=='list'&&(view==='day'?i===cur:false)}"><b>${d.dd}</b><small>${d.wd}</small></button>`).join('');
  $('strip').classList.toggle('hide',view!=='day');
- $('view').innerHTML=view==='tix'?tix():view==='list'?`<div class="list">${list()}</div>`:(view==='week'?`<div class="legs">${LEGS.map(l=>`<button data-leg="${l.k}" aria-pressed="${leg===l.k}">${l.n}<small>${l.r}</small></button>`).join('')}</div>`:'')+grid(view==='week'?DAYS.map((d,i)=>d.leg===leg?i:-1).filter(i=>i>=0):[cur]);
+ $('view').innerHTML=view==='food'?foodV():view==='play'?playV():view==='tix'?tix():view==='list'?`<div class="list">${list()}</div>`:(view==='week'?`<div class="legs">${LEGS.map(l=>`<button data-leg="${l.k}" aria-pressed="${leg===l.k}">${l.n}<small>${l.r}</small></button>`).join('')}</div>`:'')+grid(view==='week'?DAYS.map((d,i)=>d.leg===leg?i:-1).filter(i=>i>=0):[cur]);
  if(view!=='list'){const sc=document.querySelector('.gridw');if(sc&&!rView.did){rView.did=1}}}
 function rSide(){
  let h=['一','二','三','四','五','六','日'].map(x=>`<span class="h">${x}</span>`).join('')+'<span></span>';const t=today();
@@ -533,6 +607,12 @@ document.addEventListener('click',e=>{
  const lg=t.closest('[data-leg]');if(lg){leg=lg.dataset.leg;all();return}
  const ts=t.closest('[data-tset]');if(ts){if(!need())return;let a=tmIn($('tea').value),b=tmIn($('teb').value);const dd=+$('ted').value;
   if(isNaN(a)||isNaN(b)){flash('請填好時間');return}if(b<=a){flash('結束要遲過開始');return}a=Math.max(H0,a);b=Math.min(H1,b);setTime(ts.dataset.tset,dd,a,b);openKey=null;rSheet();return}
+ const fcb=t.closest('[data-fc]');if(fcb){foodC=fcb.dataset.fc;all();return}
+ const fcy=t.closest('[data-fcity]');if(fcy){foodCity=fcy.dataset.fcity;all();return}
+ const lk=t.closest('[data-like]');if(lk){if(!need())return;const id=lk.dataset.like,who=me,on=(S.likes[id]||[]).includes(who);act(x=>{const a=(x.likes[id]||[]).filter(k=>k!==who);if(!on)a.push(who);if(a.length)x.likes[id]=a;else delete x.likes[id]});return}
+ const af=t.closest('[data-addf]');if(af){const f=FOOD.concat(S.food).find(x=>x.id===af.dataset.addf);if(f){const c=f.city||'gc';openNew(firstDay(c),f.c==='早餐'?8.5:18.5,f.c==='早餐'?10:20,f.n)}return}
+ const ap=t.closest('[data-addp]');if(ap){const x=PLAY.find(y=>y.id===ap.dataset.addp);if(x)openNew(firstDay(x.city==='bne'?'gc':x.city),10,13,x.n);return}
+ const dfd=t.closest('[data-delf]');if(dfd){const id=dfd.dataset.delf;act(x=>{x.food=x.food.filter(f=>f.id!==id)},'已刪除');return}
  const ld=t.closest('[data-lkdel]');if(ld){const [k,i]=ld.dataset.lkdel.split('|');act(x=>{const a=x.links[k]||[];a.splice(+i,1);if(!a.length)delete x.links[k]},'已刪除連結').then(()=>{if(openKey!==null)rSheet()});return}
  const tr=t.closest('[data-treset]');if(tr){const k=tr.dataset.treset;openKey=null;rSheet();act(x=>{delete x.times[k]},'已還原');return}
  const cu=t.closest('[data-cur]');if(cu){cur=+cu.dataset.cur;leg=DAYS[cur].leg;if(view==='week'&&innerWidth<760)view='day';if(view==='list')view='day';all();return}
@@ -577,6 +657,7 @@ document.addEventListener('pointerup',endDrag);
 document.addEventListener('pointercancel',()=>{if(drag&&!drag.on){clearTimeout(drag.timer);drag=null}else endDrag()});
 document.addEventListener('contextmenu',e=>{if(e.target.closest('.blk'))e.preventDefault()});
 document.addEventListener('submit',e=>{const fm=e.target;
+ if(fm.id==='addf'){e.preventDefault();if(!need())return;const n=$('afn').value.trim().slice(0,40);if(!n)return;const it={id:'u'+Date.now().toString(36),n,c:$('afc').value,city:$('afy').value,d:$('afd').value.trim().slice(0,80),w:me};act(x=>{if(!x.food.some(f=>f.id===it.id))x.food.push(it)},'已加入餐廳');return}
  if(fm.classList.contains('lkf')){e.preventDefault();if(!need())return;let u=$('lku').value.trim();const t=$('lkt').value.trim().slice(0,40);if(!okU(u)){flash('網址要用 https:// 開頭');return}u=u.slice(0,600);const k=fm.dataset.lk,who=me;act(x=>{const a=x.links[k]=x.links[k]||[];if(!a.some(l=>l.u===u))a.push({t:t||host(u),u,w:who})},'已加連結').then(()=>{if(openKey!==null)rSheet()});return}
  if(fm.id==='nfm'){e.preventDefault();const t=$('nn').value.trim();if(!t){flash('請寫埋做咩');return}let a=tmIn($('na').value),b=tmIn($('nb').value);const dd=+$('nd').value;if(isNaN(a)||isNaN(b)||b<=a){flash('結束要遲過開始');return}a=Math.max(H0,a);b=Math.min(H1,b);
   const item={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),w:me,d:dd,a,b,t:t.slice(0,40),x:$('nx').value.trim().slice(0,80)};openKey=null;draft=null;rSheet();cur=dd-14;leg=DAYS[cur].leg;act(x=>{if(!x.custom.some(c=>c.id===item.id))x.custom.push(item)},'已加入 12月'+dd+'日 '+rng(a,b))}
