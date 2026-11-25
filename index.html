@@ -283,7 +283,7 @@ const DAYS=[
   {n:'分頭：媽咪 Pacific Fair，爸爸 The Star',d:'兩個地方喺 Broadbeach 對面馬路',w:'md',e:1,ic:'bag',m:'Pacific Fair Broadbeach'},
   {n:'返 Airbnb 瞓晏覺',d:'落完水抖返夠',w:'m',e:0,ic:'rest'},
   {n:'SkyPoint 觀景台',d:'Surfers Paradise 高空睇成個海岸',w:'gb',e:1,ic:'city',m:'SkyPoint Observation Deck'}]},
- {a:18,b:22,f:'螢火蟲夜遊：Tamborine 雨林',x:'18:15 出發，大約 3.5 小時；有甜品熱飲。5pm 前食定晚飯或者小食，著行山鞋、帶薄外套。接送點：Broadbeach、Surfers Paradise、Main Beach、Southport、Helensvale 站',ic:'lights',tk:'T',u:'https://www.headout.com/day-trips/evening-rainforest-glow-worm-experience-e-15443/',m:'Curtis Falls Tamborine Mountain'}]},
+ {a:18,b:22,w:'gm',f:'螢火蟲夜遊：Tamborine 雨林（姑姐、媽咪）',x:'其他人可以自己食晚飯。18:15 出發，大約 3.5 小時；有甜品熱飲。5pm 前食定晚飯或者小食，著行山鞋、帶薄外套。接送點：Broadbeach、Surfers Paradise、Main Beach、Southport、Helensvale 站',ic:'lights',tk:'T',u:'https://www.headout.com/day-trips/evening-rainforest-glow-worm-experience-e-15443/',m:'Curtis Falls Tamborine Mountain'}]},
 {dd:17,wd:'四',tt:'自由活動',ev:[1,2],items:[
  {a:9,b:11.5,id:'s17a',q:'上午？',o:[
   {n:'第二轉落水',d:'琴日揀剩嗰樣，或者再出海',w:'gb',e:2,ic:'snorkel'},
@@ -383,7 +383,7 @@ SLOTS.forEach(sl=>Object.entries(TK[sl.id]||{}).forEach(([i,v])=>sl.o[i].tk=v));
 DAYS[1].items[2].tk='B';
 const TKL={T:'要買飛',B:'要訂位',F:'免費／唔使訂'};
 const TIPS=[['姑姐嘅螢火蟲','黃金海岸夜遊團睇嘅主要係藍光蟲，12月至3月最好睇，夏天亦有機會見到真螢火蟲；記得著行山鞋、帶薄外套。'],['墨爾本住市中心','Airbnb 喺 Rose Lane（CBD），市中心大部分地方屬免費電車區，行街好方便。'],['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
-const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['glow','16號螢火蟲夜遊團（18:15）','Tamborine，5 位'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗']];
+const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['glow','16號螢火蟲夜遊團（18:15）','Tamborine，2 位：姑姐、媽咪'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗']];
 const PACK=[['sun','防曬 SPF50+'],['hat','帽、太陽眼鏡'],['swim','泳衣、拖鞋、毛巾'],['lic','駕駛執照（揸車、租船身份證明）'],['sea','暈浪丸'],['suit','畢業禮靚衫'],['jac','薄外套（冷氣同墨爾本會凍）'],['plug','澳洲插頭轉換器']];
 const PRE=['16號落雨點算？','媽咪攰，想搵啲 chill 嘢做','爸爸想食好嘢中菜','有咩全家都啱玩？','墨爾本同悉尼應該點分日子？'];
 const $=id=>document.getElementById(id);
@@ -400,7 +400,7 @@ const flash=t=>{const s=$('st');s.textContent=t;s.classList.add('show');clearTim
 const leader=sl=>{const v=S.votes[sl.id]||{};let best=-1,bc=0;sl.o.forEach((o,i)=>{const c=(v[i]||[]).length;if(c>bc){bc=c;best=i}});return best<0?null:sl.o[best]};
 function allEv(){const out=[];
  DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{const key=di+'-'+k,ov=S.times[key],L=it.id?leader(it):null,nd=ov&&ov.d>=14&&ov.d<=27?ov.d-14:di;
-  out.push({key,di:nd,moved:!!ov,a:ov?ov.a:it.a,b:ov?ov.b:it.b,slot:it.id?it:null,L,ttl:it.id?(L?L.n:it.q):it.f,sub:it.id?(L?'投票領先':'未決定，撳嚟投票'):(it.x||''),ic:it.id?(L?L.ic:''):it.ic,w:it.id?(L?L.w:d.ppl):d.ppl,vot:it.id?Object.values(S.votes[it.id]||{}).flat():[],fx:it.id?null:it})}));
+  out.push({key,di:nd,moved:!!ov,a:ov?ov.a:it.a,b:ov?ov.b:it.b,slot:it.id?it:null,L,ttl:it.id?(L?L.n:it.q):it.f,sub:it.id?(L?'投票領先':'未決定，撳嚟投票'):(it.x||''),ic:it.id?(L?L.ic:''):it.ic,w:it.id?(L?L.w:d.ppl):d.ppl,vot:it.id?Object.values(S.votes[it.id]||{}).flat():[],fx:it.id?null:it,...(it.w&&!it.id?{w:it.w}:{})})}));
  S.custom.forEach(c=>out.push({key:'c'+c.id,di:c.d-14,a:c.a,b:c.b,cus:c,ttl:c.t,sub:(P[c.w]?P[c.w].n:'')+' 加',ic:'',w:(DAYS[c.d-14]||{}).ppl||'gmdb',cc:P[c.w]?P[c.w].c:'var(--k-gray)',vot:[]}));
  return out}
 function evOf(di){const out=allEv().filter(e=>e.di===di);
