@@ -296,7 +296,7 @@ const DAYS=[
   {n:'簡單 cafe',d:'快食快走，早啲出發',w:'gb',e:1,ic:'cafe'},
   {n:'買外賣返 Leo 屋企食',d:'坐低抖下先，最唔辛苦',w:'mb',e:0,ic:'rest'}]},
  {a:14,b:15.25,f:'揸車去黃金海岸',x:'2pm 出發，車程大約 1 小時',ic:'car'},
- {a:15.25,b:18,f:'Airbnb check-in，休息',x:'抖下先',ic:'rest'},
+ {a:15.25,b:18,f:'Airbnb check-in，休息',x:'4 Clifford Street 17, Surfers Paradise QLD 4217（Surfers Paradise）',ic:'rest',m:'4 Clifford Street 17, Surfers Paradise QLD 4217'},
  {a:18.5,b:20.5,id:'s14d',q:'第一晚點過？',o:[
   {n:'海邊散步，簡單晚餐',d:'飛完機，早啲瞓',w:'gmb',e:1,ic:'beach'},
   {n:"Hurricane's Grill（Surfers Paradise）",d:'燒肉、豬肋骨，小紅書食評畀最高分',w:'dmb',e:1,ic:'bowl',m:"Hurricane's Grill Surfers Paradise"},
@@ -322,7 +322,7 @@ const DAYS=[
   {n:'返 Airbnb 瞓晏覺',d:'落完水抖返夠',w:'m',e:0,ic:'rest'},
   {n:'SkyPoint 觀景台',d:'Surfers Paradise 高空睇成個海岸',w:'gb',e:1,ic:'city',m:'SkyPoint Observation Deck'},
   {n:'Aquaduck 鴨仔船',d:'先喺陸地遊市區，再直接落河變快艇；坐住玩，全家都啱',w:'gmdb',e:0,ic:'boat',m:'Aquaduck Surfers Paradise'}]},
- {a:18,b:22,w:'gm',f:'螢火蟲夜遊：Tamborine 雨林（姑姐、媽咪）',x:'其他人可以自己食晚飯。18:15 出發，大約 3.5 小時；有甜品熱飲。5pm 前食定晚飯或者小食，著行山鞋、帶薄外套。接送點：Broadbeach、Surfers Paradise、Main Beach、Southport、Helensvale 站',ic:'lights',tk:'T',m:'Curtis Falls Tamborine Mountain',links:[{t:'Headout：Tamborine 雨林團（6:15pm）',u:'https://www.headout.com/day-trips/evening-rainforest-glow-worm-experience-e-15443/'},{t:'Viator：Natural Bridge 螢火蟲洞團（另一選擇）',u:'https://www.viator.com/en-AU/tours/Surfers-Paradise/Glow-Worm-Cave-and-Natural-Bridge-Tour-from-Gold-Coast/d22738-2138G37'}]}]},
+ {a:18,b:22,w:'gm',f:'螢火蟲夜遊：Tamborine 雨林（姑姐、媽咪）',x:'其他人可以自己食晚飯。18:15 出發，大約 3.5 小時；有甜品熱飲。5pm 前食定晚飯或者小食，著行山鞋、帶薄外套。接送點包括 Surfers Paradise，就喺住處附近',ic:'lights',tk:'T',m:'Curtis Falls Tamborine Mountain',links:[{t:'Headout：Tamborine 雨林團（6:15pm）',u:'https://www.headout.com/day-trips/evening-rainforest-glow-worm-experience-e-15443/'},{t:'Viator：Natural Bridge 螢火蟲洞團（另一選擇）',u:'https://www.viator.com/en-AU/tours/Surfers-Paradise/Glow-Worm-Cave-and-Natural-Bridge-Tour-from-Gold-Coast/d22738-2138G37'}]}]},
 {dd:17,wd:'四',tt:'自由活動',ev:[1,2],items:[
  {a:9,b:11.5,id:'s17a',q:'上午？',o:[
   {n:'第二轉落水',d:'琴日揀剩嗰樣，或者再出海',w:'gb',e:2,ic:'snorkel'},
@@ -352,12 +352,13 @@ const DAYS=[
   {n:'Sea World',d:'海洋主題樂園，要行多啲',w:'gb',e:2,ic:'snorkel',u:'https://themeparks.com.au',m:'Sea World Gold Coast'}]},
  {a:18,b:20,f:'送爸爸同哥哥去機場',x:'確認邊個機場、幾點航班；媽咪同姑姐之後住邊度',ic:'plane'}]},
 {dd:19,wd:'六',tt:'飛墨爾本',leg:'mel',ppl:'gm',ev:[3],items:[
- {a:9,b:12,f:'飛墨爾本',x:'航班未定；Leo 送機兼還車',ic:'plane'},
- {a:13,b:15,f:'墨爾本 Airbnb check-in，休息',x:'Rose Lane, Melbourne VIC 3000（市中心）',ic:'rest',m:'Rose Lane, Melbourne VIC 3000'},
- {a:17.5,b:20.5,id:'s19n',q:'墨爾本第一晚？',o:[
+ {a:13+55/60,b:17.25,f:'VA332 飛墨爾本',x:'維珍航空 VA332，Brisbane 機場（國內線 Terminal D）13:55 起飛，17:15 到墨爾本 T3。訂位號 KTEAGA。票價唔包寄艙行李，手提每人 1 件 8 公斤',ic:'plane'},
+ {a:18,b:19.25,f:'墨爾本 Airbnb check-in',x:'Rose Lane, Melbourne VIC 3000（市中心），由機場坐 SkyBus 或者 Uber',ic:'rest',m:'Rose Lane, Melbourne VIC 3000'},
+ {a:19.5,b:21.5,id:'s19n',q:'墨爾本第一晚？',o:[
   {n:'Myer 聖誕櫥窗，Bourke St 行街',d:'今年主題係 Toy Story，免費睇',w:'gm',e:1,ic:'tree',u:'https://www.myer.com.au/content/christmas-windows',m:'Myer Melbourne Bourke Street'},
   {n:'唐人街晚飯',d:'Little Bourke Street，粵菜、點心都有',w:'gm',e:1,ic:'bowl',m:'Melbourne Chinatown Little Bourke Street'},
-  {n:'Southbank 河邊散步晚餐',d:'Yarra 河邊，夜景靚',w:'gm',e:1,ic:'city',m:'Southbank Promenade Melbourne'}]}]},
+  {n:'Southbank 河邊散步晚餐',d:'Yarra 河邊，夜景靚',w:'gm',e:1,ic:'city',m:'Southbank Promenade Melbourne'}]},
+ {a:10.25,b:12.75,f:'由黃金海岸出發去 Brisbane 機場',x:'10:15 左右退房出發，車程大約 1.5 小時；還車、check-in，起飛前 1 小時要到閘口',ic:'car'}]},
 {dd:20,wd:'日',tt:'一日遊',leg:'mel',ppl:'gm',ev:[3],items:[
  {a:9,b:21,id:'s20d',q:'第一個一日遊去邊？',o:[
   {n:'Phillip Island 企鵝歸巢',d:'跟團；日落睇細企鵝上岸，途中可以見袋鼠、樹熊，夜晚先返',w:'gm',e:1,ic:'koala',u:'https://www.klook.com/en-GB/activity/22808-penguin-parade-phillip-island-tour-melbourne/'},
@@ -367,7 +368,8 @@ const DAYS=[
  {a:10,b:16,id:'s21a',q:'今日做咩？',o:[
   {n:'市中心行街',d:'Emporium、QV、Bourke Street Mall；Queen Victoria Market 星期一休息',w:'m',e:1,ic:'bag',m:'Emporium Melbourne'},
   {n:'Brighton 彩色沙灘小屋、St Kilda 海灘',d:'影相一流，St Kilda 有海邊 cafe',w:'g',e:1,ic:'beach',m:'Brighton Bathing Boxes'},
-  {n:'休息日',d:'Airbnb 附近行下，瞓晏覺',w:'m',e:0,ic:'rest'}]},
+  {n:'休息日',d:'Airbnb 附近行下，瞓晏覺',w:'m',e:0,ic:'rest'},
+  {n:'探姑姐朋友 Vivi',d:'日子未定，同 Vivi 約好就揀呢格；聯絡方法喺家庭群組',w:'gm',e:0,ic:'cafe'}]},
  {a:18,b:20,f:'晚飯（自由）',x:'可以喺頂頭快速新增',ic:'bowl'}]},
 {dd:22,wd:'二',tt:'一日遊',leg:'mel',ppl:'gm',ev:[3],items:[
  {a:9,b:20,id:'s22d',q:'第二個一日遊？',o:[
@@ -378,7 +380,8 @@ const DAYS=[
  {a:10,b:17,id:'s23d',q:'今日？',o:[
   {n:'Chadstone 購物中心',d:'墨爾本最大型商場',w:'m',e:1,ic:'bag',m:'Chadstone Shopping Centre'},
   {n:'Puffing Billy 蒸氣火車',d:'坐古董火車穿過森林，輕鬆；要預訂',w:'gm',e:1,ic:'city',m:'Puffing Billy Belgrave'},
-  {n:'休息日',d:'聖誕前抖返夠',w:'m',e:0,ic:'rest'}]}]},
+  {n:'休息日',d:'聖誕前抖返夠',w:'m',e:0,ic:'rest'},
+  {n:'探姑姐朋友 Vivi',d:'日子未定，同 Vivi 約好就揀呢格；聯絡方法喺家庭群組',w:'gm',e:0,ic:'cafe'}]}]},
 {dd:24,wd:'四',tt:'平安夜',leg:'mel',ppl:'gm',ev:[3],items:[
  {a:9,b:13,id:'s24a',q:'平安夜上午？',o:[
   {n:'Queen Victoria Market 最後採購',d:'星期四開，6am 至 3pm；買手信、食早餐',w:'gm',e:1,ic:'market',m:'Queen Victoria Market'},
@@ -390,14 +393,14 @@ const DAYS=[
   {n:'食完去睇聖誕燈飾',d:'市中心、Myer 櫥窗',w:'gm',e:1,ic:'lights',m:'Bourke Street Mall Melbourne'}]}]},
 {dd:25,wd:'五',tt:'聖誕・飛悉尼',leg:'syd',ppl:'gm',ev:[],items:[
  {a:10,b:13,f:'飛悉尼',x:'航班未定；聖誕節大部分商店休息，機票要早訂',ic:'plane'},
- {a:14,b:16,f:'悉尼 Airbnb check-in',x:'Airbnb 未確認',ic:'rest'},
+ {a:15,b:16,f:'悉尼 Airbnb check-in（Burwood）',x:'1-3 Elizabeth Street, Burwood NSW 2134；15:00 後 check-in。Burwood 有唐人街，食中菜好方便；去市中心坐火車',ic:'rest',m:'1-3 Elizabeth Street, Burwood NSW 2134'},
  {a:17,b:21,id:'s25n',q:'聖誕夜？',o:[
   {n:'預訂聖誕晚餐',d:'聖誕節好多餐廳要預訂',w:'gm',e:1,ic:'bowl'},
   {n:'Circular Quay 夜景',d:'歌劇院同海港大橋，免費',w:'gm',e:1,ic:'city',m:'Circular Quay Sydney'},
   {n:'Bondi 海灘散步',d:'悉尼人聖誕好鍾意去海灘',w:'g',e:1,ic:'beach',m:'Bondi Beach'}]}]},
 {dd:26,wd:'六',tt:'Boxing Day',leg:'syd',ppl:'gm',ev:[4],items:[
  {a:8,b:12,id:'s26a',q:'Boxing Day 上午？',o:[
-  {n:'Boxing Day 大減價',d:'Pitt Street Mall、Westfield Sydney、QVB 全日開，人好多',w:'m',e:1,ic:'bag',m:'Pitt Street Mall Sydney'},
+  {n:'Boxing Day 大減價',d:'市中心 Pitt Street Mall、QVB；或者就近行 Westfield Burwood',w:'m',e:1,ic:'bag',m:'Pitt Street Mall Sydney'},
   {n:'Bondi 至 Coogee 海岸步行',d:'海岸路風景一流',w:'g',e:2,ic:'beach',m:'Bondi to Coogee Walk'},
   {n:'瞓晏覺',d:'休息一陣先',w:'m',e:0,ic:'rest'}]},
  {a:12,b:15,id:'s26p',q:'1pm 帆船賽起航，點睇？',o:[
@@ -412,7 +415,8 @@ const DAYS=[
   {n:'坐渡輪去 Manly',d:'由 Circular Quay 出發，順便睇海港',w:'gm',e:1,ic:'boat',m:'Manly Wharf'},
   {n:'歌劇院、皇家植物園散步',d:'免費，輕鬆',w:'gm',e:0,ic:'city',m:'Sydney Opera House'},
   {n:'執行李，休息',d:'慢慢嚟',w:'m',e:0,ic:'rest'}]},
- {a:15,b:18,f:'飛返香港',x:'航班未定',ic:'plane'}]}
+ {a:15,b:18,f:'飛返香港',x:'航班未定',ic:'plane'},
+ {a:9.25,b:10,f:'10:00 前退房',x:'Burwood Airbnb 10:00 前 check-out，行李可以先帶住或者搵地方寄存',ic:'rest',m:'1-3 Elizabeth Street, Burwood NSW 2134'}]}
 
 ];
 const EVS=[
@@ -442,6 +446,7 @@ const FOOD=[
  {id:'sky',n:'SkyPoint 觀景台早餐',c:'早餐',city:'gc',area:'Surfers Paradise',p:'$$',w:'gmb',d:'喺高處食早餐睇成個海岸，好 chill',m:'SkyPoint Observation Deck'},
  {id:'mmk',n:'Miami Marketta 夜市',c:'夜市',city:'gc',area:'Miami',p:'$',w:'gmb',d:'逢星期三至六 5pm 起，世界各地街頭小食，唔使訂位',u:'https://www.miamimarketta.com',m:'Miami Marketta'},
  {id:'melct',n:'墨爾本唐人街',c:'中菜',city:'mel',area:'Little Bourke St',p:'$$',w:'gm',d:'粵菜、點心選擇多，同 Rose Lane 住處一樣喺市中心',m:'Melbourne Chinatown Little Bourke Street'},
+ {id:'bwct',n:'Burwood 唐人街',c:'中菜',city:'syd',area:'Burwood',p:'$$',w:'gm',d:'就喺悉尼住處附近，中菜、小食選擇多',m:'Burwood Chinatown'},
  {id:'qvm',n:'Queen Victoria Market',c:'早餐',city:'mel',area:'市中心',p:'$',w:'gm',d:'星期二、四至日開；可以邊行邊食',m:'Queen Victoria Market'}
 ];
 const PLAY=[
@@ -457,8 +462,8 @@ const PLAY=[
  {id:'whale',n:'出海睇鯨魚',city:'gc',w:'',e:1,tk:'',d:'黃金海岸觀鯨季通常大約 6 至 11 月初，12 月已經過咗季，今次唔建議',no:true}
 ];
 let foodC='全部',foodCity='all';
-const TIPS=[['姑姐嘅螢火蟲','黃金海岸夜遊團睇嘅主要係藍光蟲，12月至3月最好睇，夏天亦有機會見到真螢火蟲；記得著行山鞋、帶薄外套。'],['墨爾本住市中心','Airbnb 喺 Rose Lane（CBD），市中心大部分地方屬免費電車區，行街好方便。'],['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
-const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['glow','16號螢火蟲夜遊團（18:15）','Tamborine，2 位：姑姐、媽咪'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','未確認'],['dom','機票：19號飛墨爾本、25號飛悉尼、27號返香港',''],['meltour','墨爾本一日團','20、22號'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗'],['opera','悉尼歌劇院 Great Opera Hits','如果揀咗'],['jetb','Jet boat 加滑翔傘','如果揀咗']];
+const TIPS=[['19號冇寄艙行李','VA332 張票唔包寄艙行李，手提每人 1 件 8 公斤；行李多就要另外加購。改期要起飛前 72 小時或之前，每人 HKD 620。'],['姑姐嘅螢火蟲','黃金海岸夜遊團睇嘅主要係藍光蟲，12月至3月最好睇，夏天亦有機會見到真螢火蟲；記得著行山鞋、帶薄外套。'],['墨爾本住市中心','Airbnb 喺 Rose Lane（CBD），市中心大部分地方屬免費電車區，行街好方便。'],['墨爾本天氣多變','12月可以一日熱一日涼，帶薄外套。'],['聖誕前後','24號好多商店早關，25號大部分商店休息，飯局要預早訂。'],['15號最攰','一來一回 St Lucia，夜晚仲要揸返黃金海岸；媽咪可以車上瞓。'],['爸爸嘅賭場','The Star Gold Coast 12月照常開，同 Pacific Fair 喺對面馬路。'],['落水放上午','夏天下午通常風大啲；12月放暑假，揀定就要訂。'],['18號睇航班揀動物園','黃金海岸機場上機揀 Currumbin；Brisbane 上機揀 Lone Pine。'],['澳洲太陽好猛','SPF50+、帽、多飲水；只喺紅黃旗之間游水。']];
+const BOOK=[['car','租車','已喺 Brisbane 租好'],['water','16號落水活動','浮潛團或者租船'],['dinner15','15號中華街晚飯訂枱','Leo 負責'],['yumcha','17號飲茶訂位',''],['glow','16號螢火蟲夜遊團（18:15）','Tamborine，2 位：姑姐、媽咪'],['zoo','18號動物園門票','網上買快啲入場'],['flight','爸爸哥哥回程航班','確認機場同時間'],['mel','墨爾本 Airbnb（19–25）','Rose Lane, Melbourne CBD'],['syd','悉尼 Airbnb（25–27）','Burwood，1-3 Elizabeth St'],['dom','機票：25號飛悉尼、27號返香港','19號 VA332 已出票'],['meltour','墨爾本一日團','20、22號'],['vivi','同 Vivi 約見面日子','墨爾本，21 或 23 號比較得閒'],['xmasd','平安夜、聖誕晚餐訂位','24、25號'],['hobart','26號帆船賽遊船','如果揀咗'],['opera','悉尼歌劇院 Great Opera Hits','如果揀咗'],['jetb','Jet boat 加滑翔傘','如果揀咗']];
 const PACK=[['sun','防曬 SPF50+'],['hat','帽、太陽眼鏡'],['swim','泳衣、拖鞋、毛巾'],['lic','駕駛執照（揸車、租船身份證明）'],['sea','暈浪丸'],['suit','畢業禮靚衫'],['jac','薄外套（冷氣同墨爾本會凍）'],['plug','澳洲插頭轉換器']];
 const PRE=['16號落雨點算？','媽咪攰，想搵啲 chill 嘢做','爸爸想食好嘢中菜','有咩全家都啱玩？','墨爾本同悉尼應該點分日子？'];
 const $=id=>document.getElementById(id);
