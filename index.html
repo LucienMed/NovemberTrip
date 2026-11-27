@@ -207,6 +207,17 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
 .addf{margin-top:24px;background:var(--side);border-radius:16px;padding:16px}
 .addf input,.addf select{font:inherit;font-size:16px;min-height:44px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);flex:1 1 140px}
 .seg{flex-wrap:wrap}
+
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px;margin-top:8px}
+.ti{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.ti.done{background:color-mix(in srgb,var(--pl) 8%,var(--card));border-color:color-mix(in srgb,var(--pl) 40%,var(--line))}
+.tih{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.tih b{font-size:16px}
+.tip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}.tip b{font-size:18px}
+.buy{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:8px;font-size:14px}
+.buy label{display:flex;align-items:center;gap:6px;font-weight:700}.buy input{width:64px;font:inherit;font-size:16px;min-height:40px;padding:4px 8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bought{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--pl);font-weight:700;border-top:1px dashed var(--line);padding-top:8px;font-size:14px}
+details.more{margin-top:18px}details.more summary{cursor:pointer;font-weight:700;padding:8px 0;min-height:44px}
+.like.big{padding:8px 14px;font-size:15px}
 .hide{display:none!important}
 @media(max-width:600px){.seg button{padding:7px 10px}.tr{grid-template-columns:44px minmax(0,1fr)}.tr .acts{grid-column:2}}
 @media(max-width:900px){.top{position:static}.main{order:-1}.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.strip{display:flex}.ch{top:auto;position:static}.lday{top:0}}
@@ -219,7 +230,7 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
 <body>
 <div class="top">
   <h1>O家畢業遊 <span>12月</span></h1>
-  <div class="seg" role="group" aria-label="檢視"><button data-view="week">週</button><button data-view="day">日</button><button data-view="list">清單</button><button data-view="tix">要訂</button><button data-view="food">食</button><button data-view="play">玩</button></div>
+  <div class="seg" role="group" aria-label="檢視"><button data-view="week">週</button><button data-view="day">日</button><button data-view="list">清單</button><button data-view="tix">買飛</button><button data-view="food">食</button><button data-view="play">玩</button></div>
   <div class="sp"></div>
   <button class="meb" id="meb" type="button"><span class="av" id="mea" style="background:var(--k-gray)">?</span><span id="men">揀你係邊個</span></button>
 </div>
@@ -229,7 +240,7 @@ footer{color:var(--mute);font-size:13px;padding:20px 0 40px}
   <aside>
     <div><div class="mmt">2026年12月</div><div class="mm" id="mm"></div><p class="side-note" style="margin:8px 0 0">藍色：黃金海岸（全家）；紫色：墨爾本；紅色：悉尼（媽咪同姑姐）。拖方塊可以改時間。</p></div>
     <div><h3>邊個開心（撳嚟篩選）</h3><div class="pf" id="pf"></div><p class="side-note" id="tired"></p></div>
-    <div><h3>要買飛／訂位</h3><p class="side-note" id="tixs" style="margin:0 0 8px"></p><button class="btn g" type="button" data-view="tix">睇晒要訂嘅嘢</button></div>
+    <div><h3>買飛</h3><p class="side-note" id="tixs" style="margin:0 0 8px"></p><button class="btn g" type="button" data-view="tix">睇邊個有興趣</button></div>
     <div><h3>期間活動</h3><p class="side-note">灰色細條係當日嘅特別活動。更多睇 <a href="https://experiencegoldcoast.com/events/all" target="_blank" rel="noopener">Experience Gold Coast ↗</a></p></div>
   </aside>
   <div class="main">
@@ -269,7 +280,7 @@ const CFG=window.TRIP_CONFIG||{};const DB=!!(CFG.url&&CFG.key&&!/YOUR/.test(CFG.
 const HDR={apikey:CFG.key,Authorization:'Bearer '+CFG.key};
 const PHOTO=p=>CFG.url.replace(/\/$/,'')+'/storage/v1/object/public/photos/'+p.split('/').map(encodeURIComponent).join('/');
 let S;try{S=JSON.parse(document.getElementById('state').textContent)}catch(e){S={}}
-const norm=x=>{x=x&&typeof x==='object'?x:{};x.votes=x.votes||{};x.done=x.done||{};x.notes=x.notes||[];x.photos=x.photos||[];x.custom=x.custom||[];x.times=x.times&&typeof x.times==='object'?x.times:{};x.links=x.links&&typeof x.links==='object'?x.links:{};x.likes=x.likes&&typeof x.likes==='object'?x.likes:{};x.food=Array.isArray(x.food)?x.food:[];return x};
+const norm=x=>{x=x&&typeof x==='object'?x:{};x.votes=x.votes||{};x.done=x.done||{};x.notes=x.notes||[];x.photos=x.photos||[];x.custom=x.custom||[];x.times=x.times&&typeof x.times==='object'?x.times:{};x.links=x.links&&typeof x.links==='object'?x.links:{};x.likes=x.likes&&typeof x.likes==='object'?x.likes:{};x.food=Array.isArray(x.food)?x.food:[];x.bought=x.bought&&typeof x.bought==='object'?x.bought:{};return x};
 if(!DB){try{const l=JSON.parse(localStorage.getItem('o-state')||'null');if(l)S=l}catch(e){}}
 S=norm(S);
 const P={g:{n:'姑姐',c:'var(--pg)',t:'落水派'},m:{n:'媽咪',c:'var(--pm)',t:'行街 chill 派'},d:{n:'爸爸',c:'var(--pd)',t:'賭場食家派'},b:{n:'哥哥',c:'var(--pb)',t:'乜都 OK 派'},l:{n:'Leo',c:'var(--pl)',t:'主人家'}};
@@ -434,13 +445,13 @@ const FOOD=[
  {id:'qvm',n:'Queen Victoria Market',c:'早餐',city:'mel',area:'市中心',p:'$',w:'gm',d:'星期二、四至日開；可以邊行邊食',m:'Queen Victoria Market'}
 ];
 const PLAY=[
- {id:'jet',n:'Jet boat 快艇加滑翔傘',city:'gc',w:'gb',e:2,tk:'B',d:'小紅書兩樣都畀最高評價，好刺激；有合埋嘅套票',m:'Gold Coast jet boat parasailing Main Beach'},
- {id:'duck',n:'Aquaduck 鴨仔船',city:'gc',w:'gmdb',e:0,tk:'T',d:'陸上遊 Surfers 市區，再落河變快艇，坐住玩',m:'Aquaduck Surfers Paradise'},
- {id:'skyp',n:'SkyPoint 觀景台',city:'gc',w:'gmb',e:0,tk:'T',d:'高空睇成個海岸，可以順便食早餐',m:'SkyPoint Observation Deck'},
- {id:'burl',n:'Burleigh Head 國家公園',city:'gc',w:'gmb',e:1,tk:'F',d:'海岸散步路，風景好，有機會見野生動物',m:'Burleigh Head National Park'},
- {id:'surf',n:'衝浪體驗班',city:'gc',w:'gb',e:3,tk:'B',d:'有教練教，想試就試',m:'surf school Surfers Paradise'},
- {id:'para',n:'Paradise Country 農場',city:'gc',w:'gmb',e:1,tk:'T',d:'農場動物，有樹熊早餐（要預訂）',m:'Paradise Country Oxenford'},
- {id:'glow',n:'螢火蟲夜遊',city:'gc',w:'gm',e:1,tk:'T',d:'已經放咗喺 16 號晚',m:'Curtis Falls Tamborine Mountain'},
+ {id:'jet',ref:'v:s16a:4',n:'Jet boat 快艇加滑翔傘',city:'gc',w:'gb',e:2,tk:'B',d:'小紅書兩樣都畀最高評價，好刺激；有合埋嘅套票',m:'Gold Coast jet boat parasailing Main Beach'},
+ {id:'duck',ref:'v:s16p:3',n:'Aquaduck 鴨仔船',city:'gc',w:'gmdb',e:0,tk:'T',d:'陸上遊 Surfers 市區，再落河變快艇，坐住玩',m:'Aquaduck Surfers Paradise'},
+ {id:'skyp',ref:'v:s16p:2',n:'SkyPoint 觀景台',city:'gc',w:'gmb',e:0,tk:'T',d:'高空睇成個海岸，可以順便食早餐',m:'SkyPoint Observation Deck'},
+ {id:'burl',ref:'v:s17a:4',n:'Burleigh Head 國家公園',city:'gc',w:'gmb',e:1,tk:'F',d:'海岸散步路，風景好，有機會見野生動物',m:'Burleigh Head National Park'},
+ {id:'surf',ref:'v:s17a:5',n:'衝浪體驗班',city:'gc',w:'gb',e:3,tk:'B',d:'有教練教，想試就試',m:'surf school Surfers Paradise'},
+ {id:'para',ref:'v:s17p:3',n:'Paradise Country 農場',city:'gc',w:'gmb',e:1,tk:'T',d:'農場動物，有樹熊早餐（要預訂）',m:'Paradise Country Oxenford'},
+ {id:'glow',ref:'f:2-2',n:'螢火蟲夜遊',city:'gc',w:'gm',e:1,tk:'T',d:'已經放咗喺 16 號晚（6:15pm 出發），想去就撳有興趣',m:'Curtis Falls Tamborine Mountain'},
  {id:'dw',n:'Dreamworld',city:'gc',w:'gb',e:3,tk:'T',d:'過山車同機動遊戲，要成日',m:'Dreamworld Coomera'},
  {id:'more',n:'Moreton Island 海豚島',city:'bne',w:'gb',e:2,tk:'B',d:'由 Brisbane 坐船出島，傍晚可以見野生海豚、睇沉船；要成日，今次行程未有空檔',m:'Tangalooma Island Resort'},
  {id:'whale',n:'出海睇鯨魚',city:'gc',w:'',e:1,tk:'',d:'黃金海岸觀鯨季通常大約 6 至 11 月初，12 月已經過咗季，今次唔建議',no:true}
@@ -487,26 +498,37 @@ function grid(idx){
   return `<div class="col${isT?' today':''}" data-day="${i}" style="height:calc(${H1-H0} * var(--H))">${evOf(i).map(blk).join('')}${isT&&t.h>=H0?`<div class="now" style="top:calc(${t.h-H0} * var(--H))"></div>`:''}</div>`}).join('')}</div></div>`;
  return h}
 function list(){return DAYS.map((d,i)=>`<div class="lday">12月${d.dd}日 星期${d.wd}<small>${d.tt}</small></div>${d.ev.map(k=>`<button class="li" data-xe="${k}"><span class="t">全日</span><span class="bar" style="background:${col(EVS[k].ic)}"></span><span><b>${EVS[k].n}</b><small>${EVS[k].w}</small></span></button>`).join('')}${evOf(i).map(e=>`<button class="li${dim(e)?' dim':''}" data-ev="${e.key}"><span class="t">${rng(e.a,e.b)}</span><span class="bar" style="background:${ecol(e)}"></span><span><b>${esc(e.ttl)}</b><small>${esc(e.sub)}</small></span></button>`).join('')}`).join('')}
+function fixedDef(k){const [di,j]=k.slice(2).split('-').map(Number);const it=(DAYS[di]||{items:[]}).items[j];return it&&it.w?it.w.split(''):[]}
+function ppl(k){if(k.startsWith('v:')){const [,sid,i]=k.split(':');return (((S.votes[sid]||{})[i])||[]).filter(x=>P[x])}
+ const r=S.likes[k];if(Array.isArray(r))return r.filter(x=>P[x]);return k.startsWith('f:')?fixedDef(k):[]}
+function toggleInt(k){if(!need())return;const who=me,on=ppl(k).includes(who),base=ppl(k);
+ act(x=>{if(k.startsWith('v:')){const [,sid,i]=k.split(':');const v=x.votes[sid]=x.votes[sid]||{};const a=(v[i]||[]).filter(y=>y!==who);if(!on)a.push(who);v[i]=a}
+  else{let a=Array.isArray(x.likes[k])?x.likes[k].slice():base.slice();a=a.filter(y=>y!==who);if(!on)a.push(who);x.likes[k]=a}},on?'已取消興趣':'已記低你有興趣')}
+const avs=l=>l.length?`<span class="lav">${l.map(k=>`<i style="background:${P[k].c}" title="${P[k].n}">${P[k].n[0]}</i>`).join('')}</span>`:'';
+const intBtn=(k,big)=>{const l=ppl(k),mine=me&&l.includes(me);return `<button class="like${mine?' on':''}${big?' big':''}" data-int="${esc(k)}" aria-pressed="${!!mine}"><span class="hrt" aria-hidden="true"></span>${mine?'有興趣 ✓':'有興趣？'}${avs(l)}</button>`};
+const likeBtn=id=>intBtn(id);
+function tkList(){const out=[],seen={};
+ allEv().forEach(e=>{const d=DAYS[e.di];if(!d)return;
+  if(e.slot)e.slot.o.forEach((o,i)=>{if(o.tk&&o.tk!=='F')out.push({k:'v:'+e.slot.id+':'+i,n:o.n,tk:o.tk,d,a:e.a,o,ek:e.key})});
+  else if(e.fx&&e.fx.tk&&e.fx.tk!=='F')out.push({k:'f:'+e.key,n:e.fx.f,tk:e.fx.tk,d,a:e.a,o:e.fx,ek:e.key})});
+ PLAY.forEach(x=>{if(!x.ref&&!x.no&&x.tk&&x.tk!=='F')out.push({k:'p_'+x.id,n:x.n,tk:x.tk,d:null,o:x})});
+ return out}
 function tix(){
- const need=[],other=[],free=[];
- DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{const ov=S.times[di+'-'+k],ed=ov&&DAYS[ov.d-14]?DAYS[ov.d-14]:d,ea=ov?ov.a:it.a;
-  if(!it.id){if(it.tk)need.push({d:ed,a:ea,n:it.f,tk:it.tk,k:'tk:f'+di+'-'+k,o:it});return}
-  const L=leader(it);
-  it.o.forEach((o,i)=>{if(!o.tk)return;const r={d:ed,a:ea,n:o.n,tk:o.tk,k:'tk:'+it.id+':'+i,o,lead:L===o};
-   if(o.tk==='F')free.push(r);else if(L===o)need.push(r);else other.push(r)})}));
- const done=need.filter(r=>S.done[r.k]).length,und=SLOTS.filter(sl=>!leader(sl)).length;
- const row=r=>{const on=!!S.done[r.k];return `<div class="tr${on?' on':''}">${r.tk==='F'?'<span></span>':`<button class="ck tb${on?' on':''}" data-ck="${r.k}" aria-label="已訂 ${esc(r.n)}"><span class="bx"></span></button>`}<div><span class="when">12月${r.d.dd}日（${r.d.wd}）${hm(r.a)}</span><br><b>${esc(r.n)}</b><span class="tg ${r.tk}">${TKL[r.tk]}</span>${on&&P[S.done[r.k]]?` <small class="when">${P[S.done[r.k]].n} 訂咗</small>`:''}</div><div class="acts">${links(r.o)}</div></div>`};
- const LL=[];allEv().sort((x,y)=>x.di-y.di||x.a-y.a).forEach(e=>{const d=DAYS[e.di];if(!d)return;const ls=[];
-  if(e.fx){if(e.fx.u)ls.push({t:'官網／預訂',u:e.fx.u});(e.fx.links||[]).forEach(l=>ls.push(l))}
-  if(e.L&&e.L.u)ls.push({t:host(e.L.u),u:e.L.u});
-  (S.links[e.key]||[]).filter(l=>okU(l.u)).forEach(l=>ls.push({t:l.t||host(l.u),u:l.u}));
-  if(ls.length)LL.push(`<div class="tr hl"><div><span class="when">12月${d.dd}日（${d.wd}）${hm(e.a)}</span><br><b>${esc(e.ttl)}</b></div><div class="acts">${ls.map(l=>`<a class="lk" href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.t)} ↗</a>`).join('')}</div></div>`)});
- return `<div class="tx2"><div class="tsum"><div><b>${need.length}</b>而家要訂</div><div><b>${done}</b>已訂</div><div><b>${und}</b>格未決定</div></div>
- <h3>所有預訂連結</h3><p>跟而家個時間表排；撳任何活動都可以自己貼多條連結。</p>${LL.join('')||'<p class="when">未有</p>'}
- <h3>一定要訂</h3><p>暫時投票領先，或者已經定咗嘅。訂好就剔，大家會見到邊個訂咗。</p>${need.map(row).join('')||'<p class="when">未有</p>'}
- <h3>改投嘅話就要訂</h3><p>其他選項，如果最後揀佢就要買飛或者訂位。</p>${other.map(row).join('')}
- <h3>免費／唔使訂</h3><p>去到就得。</p>${free.map(row).join('')}</div>`}
-const likeBtn=id=>{const l=(S.likes[id]||[]).filter(k=>P[k]),mine=me&&l.includes(me);return `<button class="like${mine?' on':''}" data-like="${esc(id)}" aria-pressed="${!!mine}"><span class="hrt" aria-hidden="true"></span>${mine?'想去':'想去？'}${l.length?`<span class="lav">${l.map(k=>`<i style="background:${P[k].c}">${P[k].n[0]}</i>`).join('')}</span>`:''}</button>`};
+ const L=tkList().map(r=>({...r,p:ppl(r.k),b:S.bought[r.k]}));
+ const want=L.filter(r=>r.p.length||r.b).sort((a,b)=>(!!a.b-!!b.b)||(b.p.length-a.p.length)||((a.d?a.d.dd:99)-(b.d?b.d.dd:99))),none=L.filter(r=>!r.p.length&&!r.b);
+ const nb=want.filter(r=>!r.b).length,bt=want.filter(r=>r.b).length;
+ const lnk=r=>{const o=r.o,ls=[];if(o.u&&okU(o.u))ls.push({t:host(o.u),u:o.u});(o.links||[]).forEach(l=>ls.push(l));if(r.ek)(S.links[r.ek]||[]).filter(l=>okU(l.u)).forEach(l=>ls.push({t:l.t||host(l.u),u:l.u}));
+  return ls.map(l=>`<a class="lk" href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.t)} ↗</a>`).join('')+(o.m?`<a class="lk" href="${MAP(o.m)}" target="_blank" rel="noopener">地圖 ↗</a>`:'')};
+ const when=r=>r.d?`12月${r.d.dd}日（${r.d.wd}）${hm(r.a)}`:'未排入行程';
+ const card=r=>{const c=r.p.length;return `<article class="ti${r.b?' done':''}"><div class="tih"><b>${esc(r.n)}</b><span class="tg ${r.tk}">${TKL[r.tk]}</span></div><span class="when">${when(r)}</span>
+  <div class="tip">${c?`${avs(r.p)}<span><b>${c}</b> 人有興趣：${r.p.map(k=>P[k].n).join('、')}</span>`:'<span class="when">未有人撳有興趣</span>'}</div>
+  <div class="acts">${intBtn(r.k)}${lnk(r)}</div>
+  ${r.b?`<div class="bought"><span>✓ 已${r.tk==='T'?'買':'訂'} <b>${esc(r.b.n)}</b> ${r.tk==='T'?'張':'位'}（${esc(P[r.b.w]?P[r.b.w].n:'')}）${r.b.n<c?`，仲差 ${c-r.b.n} 個`:''}</span><button class="btn g sm" data-unbuy="${esc(r.k)}">取消記錄</button></div>`
+   :`<form class="buy" data-buy="${esc(r.k)}"><label>已${r.tk==='T'?'買':'訂'}<input type="number" min="1" max="30" value="${Math.max(1,c)}" aria-label="數量"></label><span>${r.tk==='T'?'張':'位'}</span><button class="btn s sm" type="submit">記錄</button></form>`}</article>`};
+ return `<div class="tx2"><div class="tsum"><div><b>${nb}</b>有人有興趣、未買</div><div><b>${bt}</b>已買／已訂</div><div><b>${none.length}</b>未有人有興趣</div></div>
+ <p class="lead" style="margin-top:12px">每個人撳自己有興趣嘅，唔使揀死一樣；Leo 睇住人數買飛，買完撳「記錄」。</p>
+ <h3>有人有興趣</h3>${want.length?`<div class="tgrid">${want.map(card).join('')}</div>`:'<p class="when">暫時未有人撳有興趣</p>'}
+ <details class="more"><summary>未有人有興趣（${none.length}）</summary><div class="tgrid">${none.map(card).join('')}</div></details></div>`}
 const whoDots=w=>w?`<span class="dots">${w.split('').map(k=>`<span class="dot" style="background:${P[k].c}"></span>`).join('')} 啱${w.split('').map(k=>P[k].n).join('、')}</span>`:'';
 const CITY={gc:'黃金海岸',mel:'墨爾本',syd:'悉尼',bne:'Brisbane'};
 const firstDay=c=>{const i=DAYS.findIndex((d,j)=>j>=cur&&d.leg===c);const k=i>=0?i:DAYS.findIndex(d=>d.leg===c);return DAYS[k>=0?k:0].dd};
@@ -522,7 +544,7 @@ function foodV(){
 function playV(){
  const list=PLAY.slice().sort((a,b)=>(a.no?1:0)-(b.no?1:0)||(S.likes[b.id]||[]).length-(S.likes[a.id]||[]).length);
  return `<div class="gd"><div class="gh"><h2 class="s">玩咩好</h2><p class="lead">小紅書同網上推介嘅好去處；好多已經放咗喺日曆投票入面，想加去其他時間就撳「加入行程」。</p></div>
- <div class="fgrid">${list.map(x=>`<article class="fc${x.no?' no':''}" style="--cc:var(--k-${x.no?'gray':'sea'})"><div class="fh"><b>${esc(x.n)}</b>${x.tk?`<span class="tg ${x.tk}">${TKL[x.tk]}</span>`:''}</div><span class="meta">${esc(CITY[x.city]||'')}${x.no?'':` · 辛苦度 ${'●'.repeat(x.e)}${'○'.repeat(3-x.e)}`}</span><p>${esc(x.d)}</p>${whoDots(x.w)}${x.no?'':`<div class="acts">${likeBtn('p_'+x.id)}${x.m?`<a class="lk" href="${MAP(x.m)}" target="_blank" rel="noopener">地圖 ↗</a>`:''}<button class="btn g sm" data-addp="${esc(x.id)}">加入行程</button></div>`}</article>`).join('')}</div></div>`}
+ <div class="fgrid">${list.map(x=>`<article class="fc${x.no?' no':''}" style="--cc:var(--k-${x.no?'gray':'sea'})"><div class="fh"><b>${esc(x.n)}</b>${x.tk?`<span class="tg ${x.tk}">${TKL[x.tk]}</span>`:''}</div><span class="meta">${esc(CITY[x.city]||'')}${x.no?'':` · 辛苦度 ${'●'.repeat(x.e)}${'○'.repeat(3-x.e)}`}</span><p>${esc(x.d)}</p>${whoDots(x.w)}${x.no?'':`<div class="acts">${intBtn(x.ref||'p_'+x.id)}${x.m?`<a class="lk" href="${MAP(x.m)}" target="_blank" rel="noopener">地圖 ↗</a>`:''}<button class="btn g sm" data-addp="${esc(x.id)}">加入行程</button></div>`}</article>`).join('')}</div></div>`}
 function rView(){
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.view===view));
  $('strip').innerHTML=DAYS.map((d,i)=>`<button data-cur="${i}" aria-pressed="${view!=='list'&&(view==='day'?i===cur:false)}"><b>${d.dd}</b><small>${d.wd}</small></button>`).join('');
@@ -536,7 +558,7 @@ function rSide(){
  const dec=SLOTS.map(leader),n=dec.filter(Boolean).length;
  $('pf').innerHTML=FAM.map(k=>{const my=SLOTS.filter(x=>x.ppl.includes(k)).map(leader),n=my.filter(Boolean).length,hit=my.filter(o=>o&&o.w.includes(k)).length;return `<button data-f="${k}" aria-pressed="${filt.includes(k)}" style="color:${P[k].c}"><span class="cb"></span><span style="color:var(--ink)">${P[k].n}</span><small>${n?Math.round(hit/n*100)+'%':'－'}</small></button>`}).join('');
  const dm=SLOTS.filter(x=>x.ppl.includes('m')).map(leader),eff=dm.reduce((a,o)=>a+(o?o.e:0),0),mx=dm.reduce((a,o)=>a+(o?3:0),0),ti=mx?Math.round(eff/mx*100):0;
- {let nn=0,dn=0;DAYS.forEach((d,di)=>d.items.forEach((it,k)=>{let key=null;if(!it.id&&it.tk)key='tk:f'+di+'-'+k;else if(it.id){const L=leader(it);if(L&&L.tk&&L.tk!=='F')key='tk:'+it.id+':'+it.o.indexOf(L)}if(key){nn++;if(S.done[key])dn++}}));$('tixs').textContent=`而家要訂 ${nn} 樣，已訂 ${dn} 樣。`}
+ {const L=tkList(),w=L.filter(r=>ppl(r.k).length&&!S.bought[r.k]).length,b=L.filter(r=>S.bought[r.k]).length;$('tixs').textContent=`${w} 樣有人有興趣未買，已買／已訂 ${b} 樣。`}
  $('tired').textContent=n?`媽咪攰度 ${ti}%${ti>55?'，要加休息！':''}${dec.some(o=>o&&o.ic==='chips')?'':'；爸爸未有賭場！'}`:'未有人投票'}
 function rMe(){$('mea').textContent=me?P[me].n[0]:'?';$('mea').style.background=me?P[me].c:'var(--k-gray)';$('men').textContent=me?P[me].n:'揀你係邊個'}
 const okU=u=>/^https:\/\/[^\s"'<>]+$/.test(u||'');
@@ -559,10 +581,10 @@ function rSheet(){
  else if(String(openKey).startsWith('x')){const e=EVS[+openKey.slice(1)];pan.innerHTML=`<div class="ph" style="background:${col(e.ic)}"><h2 id="sht">${e.n}</h2><p>${e.w}</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb"><p class="d">${e.d}</p><div class="acts"><a class="lk" href="${e.u}" target="_blank" rel="noopener">詳情 ↗</a></div></div>`}
  else{const e=findEv(openKey);if(!e){openKey=null;rSheet();return}const d=DAYS[e.di]||DAYS[0];
   let body='';
-  if(e.slot){const v=S.votes[e.slot.id]||{};body=`<p class="d">${esc(e.slot.q)} 撳「投呢個」，再撳一次取消。</p>`+e.slot.o.map((o,i)=>{const vs=(v[i]||[]).filter(x=>P[x]),mine=me&&vs.includes(me);
-   return `<div class="op${e.L===o?' win':''}${mine?' mine':''}"><div class="ophd"><i style="background:${col(o.ic)}"></i><b>${o.n}</b>${o.tk?`<span class="tg ${o.tk}">${TKL[o.tk]}</span>`:''}</div><span class="d">${o.d}</span><span class="dots">${o.w.split('').map(k=>`<span class="dot" style="background:${P[k].c}"></span>`).join('')} 啱${o.w.split('').map(k=>P[k].n).join('、')}</span>${vs.length?`<span class="vs">${vs.map(x=>`<span class="v" style="background:${P[x].c}">${P[x].n}</span>`).join('')}</span>`:''}<div class="acts">${links(o)}<button class="vote" data-s="${e.slot.id}" data-i="${i}">${mine?'已投 ✓':'投呢個'}</button></div></div>`}).join('')}
+  if(e.slot){const v=S.votes[e.slot.id]||{};body=`<p class="d">${esc(e.slot.q)} 有興趣嘅都撳，可以揀多過一個；最多人有興趣嘅會顯示喺日曆。</p>`+e.slot.o.map((o,i)=>{const vs=(v[i]||[]).filter(x=>P[x]),mine=me&&vs.includes(me);
+   return `<div class="op${e.L===o?' win':''}${mine?' mine':''}"><div class="ophd"><i style="background:${col(o.ic)}"></i><b>${o.n}</b>${o.tk?`<span class="tg ${o.tk}">${TKL[o.tk]}</span>`:''}</div><span class="d">${o.d}</span><span class="dots">${o.w.split('').map(k=>`<span class="dot" style="background:${P[k].c}"></span>`).join('')} 啱${o.w.split('').map(k=>P[k].n).join('、')}</span>${vs.length?`<span class="vs">${vs.map(x=>`<span class="v" style="background:${P[x].c}">${P[x].n}</span>`).join('')}</span>`:''}<div class="acts">${links(o)}<button class="vote" data-int="v:${e.slot.id}:${i}">${mine?'有興趣 ✓':'有興趣'}</button></div></div>`}).join('')}
   else if(e.cus){body=`<p class="d">${esc(P[e.cus.w]?P[e.cus.w].n:'')} 新增嘅活動${e.cus.x?'：'+esc(e.cus.x):''}</p><form class="fm" id="cfm" data-cid="${esc(e.cus.id)}"><label>名稱<input type="text" id="cn" maxlength="40" value="${esc(e.cus.t)}"></label><label>地點／備註<input type="text" id="cx" maxlength="80" value="${esc(e.cus.x||'')}"></label><div class="acts"><button class="btn s" type="submit">儲存名稱</button><a class="lk" href="${MAP((e.cus.x||e.cus.t)+' '+({gc:'Gold Coast',mel:'Melbourne',syd:'Sydney'}[(DAYS[e.di]||{}).leg]||''))}" target="_blank" rel="noopener">地圖 ↗</a>${me===e.cus.w||me==='l'?`<button class="btn g" type="button" data-del="${esc(e.cus.id)}">刪除</button>`:''}</div></form>`}
-  else body=`<p class="d">${esc(e.sub)}</p>${e.fx&&(e.fx.m||e.fx.u)?`<div class="acts">${e.fx.u?`<a class="lk" href="${e.fx.u}" target="_blank" rel="noopener">官網／預訂 ↗</a>`:''}${e.fx.m?`<a class="lk" href="${MAP(e.fx.m)}" target="_blank" rel="noopener">地圖 ↗</a>`:''}</div>`:''}`;
+  else body=`<p class="d">${esc(e.sub)}</p>${e.fx&&e.fx.tk&&e.fx.tk!=='F'?`<div class="acts">${intBtn('f:'+e.key,1)}</div>`:''}${e.fx&&(e.fx.m||e.fx.u)?`<div class="acts">${e.fx.u?`<a class="lk" href="${e.fx.u}" target="_blank" rel="noopener">官網／預訂 ↗</a>`:''}${e.fx.m?`<a class="lk" href="${MAP(e.fx.m)}" target="_blank" rel="noopener">地圖 ↗</a>`:''}</div>`:''}`;
   body+=linkBox(e);body+=`<div class="te"><b>改時間</b>${timeRow(d.dd,e.a,e.b,['ted','tea','teb'])}<div class="acts"><button class="btn s" data-tset="${e.key}">儲存時間</button>${e.moved?`<button class="btn g" data-treset="${e.key}">還原原本時間</button>`:''}</div><small class="when">亦可以喺日曆直接拖方塊；拖底部改長短；手機要長按一陣先拖。</small></div>`;
   pan.innerHTML=`<div class="ph" style="background:${ecol(e)}"><h2 id="sht">${esc(e.ttl)}</h2><p>12月${d.dd}日 星期${d.wd} · ${rng(e.a,e.b)}${e.moved?' · 已調整':''}</p><button class="x" data-close aria-label="關閉">×</button></div><div class="pb">${body}</div>`}
  $('sheet').classList.remove('hide')}
@@ -609,7 +631,6 @@ document.addEventListener('click',e=>{
   if(isNaN(a)||isNaN(b)){flash('請填好時間');return}if(b<=a){flash('結束要遲過開始');return}a=Math.max(H0,a);b=Math.min(H1,b);setTime(ts.dataset.tset,dd,a,b);openKey=null;rSheet();return}
  const fcb=t.closest('[data-fc]');if(fcb){foodC=fcb.dataset.fc;all();return}
  const fcy=t.closest('[data-fcity]');if(fcy){foodCity=fcy.dataset.fcity;all();return}
- const lk=t.closest('[data-like]');if(lk){if(!need())return;const id=lk.dataset.like,who=me,on=(S.likes[id]||[]).includes(who);act(x=>{const a=(x.likes[id]||[]).filter(k=>k!==who);if(!on)a.push(who);if(a.length)x.likes[id]=a;else delete x.likes[id]});return}
  const af=t.closest('[data-addf]');if(af){const f=FOOD.concat(S.food).find(x=>x.id===af.dataset.addf);if(f){const c=f.city||'gc';openNew(firstDay(c),f.c==='早餐'?8.5:18.5,f.c==='早餐'?10:20,f.n)}return}
  const ap=t.closest('[data-addp]');if(ap){const x=PLAY.find(y=>y.id===ap.dataset.addp);if(x)openNew(firstDay(x.city==='bne'?'gc':x.city),10,13,x.n);return}
  const dfd=t.closest('[data-delf]');if(dfd){const id=dfd.dataset.delf;act(x=>{x.food=x.food.filter(f=>f.id!==id)},'已刪除');return}
@@ -621,8 +642,8 @@ document.addEventListener('click',e=>{
  const c=t.closest('[data-me]');if(c){me=c.dataset.me;try{localStorage.setItem('o-me',me)}catch(x){}openKey=null;all();rSheet();flash('你好，'+P[me].n+'！');return}
  const ev=t.closest('[data-ev]');if(ev){openKey=ev.dataset.ev;rSheet();return}
  const xe=t.closest('[data-xe]');if(xe){openKey='x'+xe.dataset.xe;rSheet();return}
- const o=t.closest('.vote');if(o){if(!need())return;const s=o.dataset.s,i=+o.dataset.i,had=((S.votes[s]||{})[i]||[]).includes(me),who=me;
-  act(x=>{const v=x.votes[s]=x.votes[s]||{};Object.keys(v).forEach(k=>v[k]=(v[k]||[]).filter(y=>y!==who));if(!had)(v[i]=v[i]||[]).push(who)});return}
+ const ib=t.closest('[data-int]');if(ib){toggleInt(ib.dataset.int);return}
+ const ub=t.closest('[data-unbuy]');if(ub){const k=ub.dataset.unbuy;act(x=>{delete x.bought[k]},'已取消記錄');return}
  const dl=t.closest('[data-del]');if(dl){const id=dl.dataset.del;openKey=null;rSheet();act(x=>{x.custom=x.custom.filter(c=>c.id!==id)},'已刪除');return}
  const k=t.closest('[data-ck]');if(k){if(!need())return;const id=k.dataset.ck,on=!!S.done[id],who=me;act(x=>{if(on)delete x.done[id];else x.done[id]=who});return}
 });
@@ -657,6 +678,7 @@ document.addEventListener('pointerup',endDrag);
 document.addEventListener('pointercancel',()=>{if(drag&&!drag.on){clearTimeout(drag.timer);drag=null}else endDrag()});
 document.addEventListener('contextmenu',e=>{if(e.target.closest('.blk'))e.preventDefault()});
 document.addEventListener('submit',e=>{const fm=e.target;
+ if(fm.classList.contains('buy')){e.preventDefault();if(!need())return;const k=fm.dataset.buy,nn=Math.max(1,Math.min(30,parseInt(fm.querySelector('input').value,10)||1)),who=me;act(x=>{x.bought[k]={n:nn,w:who}},'已記錄');return}
  if(fm.id==='addf'){e.preventDefault();if(!need())return;const n=$('afn').value.trim().slice(0,40);if(!n)return;const it={id:'u'+Date.now().toString(36),n,c:$('afc').value,city:$('afy').value,d:$('afd').value.trim().slice(0,80),w:me};act(x=>{if(!x.food.some(f=>f.id===it.id))x.food.push(it)},'已加入餐廳');return}
  if(fm.classList.contains('lkf')){e.preventDefault();if(!need())return;let u=$('lku').value.trim();const t=$('lkt').value.trim().slice(0,40);if(!okU(u)){flash('網址要用 https:// 開頭');return}u=u.slice(0,600);const k=fm.dataset.lk,who=me;act(x=>{const a=x.links[k]=x.links[k]||[];if(!a.some(l=>l.u===u))a.push({t:t||host(u),u,w:who})},'已加連結').then(()=>{if(openKey!==null)rSheet()});return}
  if(fm.id==='nfm'){e.preventDefault();const t=$('nn').value.trim();if(!t){flash('請寫埋做咩');return}let a=tmIn($('na').value),b=tmIn($('nb').value);const dd=+$('nd').value;if(isNaN(a)||isNaN(b)||b<=a){flash('結束要遲過開始');return}a=Math.max(H0,a);b=Math.min(H1,b);
@@ -669,7 +691,8 @@ $('file').addEventListener('change',async e=>{const fs=[...e.target.files];e.tar
   const r=await api('/storage/v1/object/photos/'+path,{method:'POST',headers:{'Content-Type':b.type||'application/octet-stream'},body:b});if(!r.ok)throw 0;add.push({path,w:me})}catch(x){flash('有相上載唔到')}}
  if(add.length)act(x=>{x.photos.push(...add.filter(a=>!x.photos.some(p=>p.path===a.path)));if(x.photos.length>200)x.photos=x.photos.slice(-200)},'上載咗 '+add.length+' 張')});
 $('copy').addEventListener('click',async()=>{const L=['【O家黃金海岸畢業遊 投票結果】'];
- DAYS.forEach(d=>d.items.forEach(it=>{if(!it.id)return;const v=S.votes[it.id]||{},ld=leader(it);L.push(`${d.dd}/12 ${hm(it.a)}：${ld?ld.n:'未決定'}`+(me?`（我揀：${(it.o.find((o,i)=>(v[i]||[]).includes(me))||{n:'未揀'}).n}）`:''))}));
+ DAYS.forEach(d=>d.items.forEach(it=>{if(!it.id)return;const v=S.votes[it.id]||{},ld=leader(it),mi=it.o.filter((o,i)=>(v[i]||[]).includes(me)).map(o=>o.n);L.push(`${d.dd}/12 ${hm(it.a)}：${ld?ld.n:'未決定'}`+(me?`（我有興趣：${mi.length?mi.join('、'):'未揀'}）`:''))}));
+ const tl=tkList().map(r=>({n:r.n,p:ppl(r.k),b:S.bought[r.k]})).filter(r=>r.p.length);if(tl.length){L.push('','【要買飛】');tl.forEach(r=>L.push(`${r.n}：${r.p.length} 人（${r.p.map(k=>P[k].n).join('、')}）${r.b?' ✓ 已買 '+r.b.n:''}`))}
  S.custom.forEach(c=>L.push(`${c.d}/12 ${hm(c.a)}：${c.t}（新增）`));if(me)L.push('by '+P[me].n);const txt=L.join('\n');
  try{await navigator.clipboard.writeText(txt);flash('已複製，貼去 WhatsApp 就得')}catch(x){$('copyout').innerHTML='<textarea readonly aria-label="結果"></textarea>';$('copyout').firstChild.value=txt;$('copyout').firstChild.select();flash('請長按複製')}});
 $('tips').innerHTML=TIPS.map(t=>`<li><b>${t[0]}</b>${t[1]}</li>`).join('');
